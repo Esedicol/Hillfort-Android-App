@@ -7,8 +7,11 @@ import org.jetbrains.anko.AnkoLogger
 import org.jetbrains.anko.info
 import org.jetbrains.anko.toast
 import org.wit.placemark.R
+import org.wit.placemark.models.PlacemarkModel
 
-class MainActivity : AppCompatActivity(), AnkoLogger {
+class PlacemarkActivity : AppCompatActivity(), AnkoLogger {
+
+    val placemarks = ArrayList<String>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -20,9 +23,14 @@ class MainActivity : AppCompatActivity(), AnkoLogger {
             val placemarkTitle = placemarkTitle.text.toString()
             if (placemarkTitle.isNotEmpty()) {
                 info("add Button Pressed: $placemarkTitle")
+                placemarks.add(placemarkTitle)
+
+                for(i in placemarks) {
+                    println("\n${i}")
+                }
             }
             else {
-                info("Please Enter a title")
+               toast("Please Enter a title")
 
             }
         }
