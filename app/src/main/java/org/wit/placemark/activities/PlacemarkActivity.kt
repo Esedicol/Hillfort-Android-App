@@ -11,7 +11,7 @@ import org.wit.placemark.models.PlacemarkModel
 
 class PlacemarkActivity : AppCompatActivity(), AnkoLogger {
 
-    val placemarks = ArrayList<String>()
+    val placemarks = ArrayList<PlacemarkModel>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -21,12 +21,21 @@ class PlacemarkActivity : AppCompatActivity(), AnkoLogger {
         info("Placemark Activity started..")
         btnAdd.setOnClickListener() {
             val placemarkTitle = placemarkTitle.text.toString()
-            if (placemarkTitle.isNotEmpty()) {
-                info("add Button Pressed: $placemarkTitle")
-                placemarks.add(placemarkTitle)
+            val description = description.text.toString()
+
+            if (placemarkTitle.isNotEmpty() && description.isNotEmpty()) {
+                info("Add Button Pressed")
+
+                val pm = PlacemarkModel()
+                pm.title = placemarkTitle
+                pm.description = description
+
+                placemarks.add(pm)
 
                 for(i in placemarks) {
-                    println("\n${i}")
+                    println("\n Index: ${placemarks.indexOf(i)}")
+                    println("Title: ${i.title}")
+                    println("Description: ${i.description}")
                 }
             }
             else {

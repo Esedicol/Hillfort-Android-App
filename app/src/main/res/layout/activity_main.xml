@@ -53,6 +53,20 @@
                     android:textColor="@color/colorPrimaryDark"
                     android:textSize="50px" />
 
+                <EditText
+                    android:id="@+id/description"
+                    android:layout_width="match_parent"
+                    android:layout_height="45dp"
+                    android:layout_margin="8dp"
+                    android:autofillHints=""
+                    android:hint="@string/hintDescription"
+                    android:inputType="text"
+                    android:maxLength="50"
+                    android:maxLines="1"
+                    android:padding="10px"
+                    android:textColor="@color/colorPrimaryDark"
+                    android:textSize="50px" />
+
                 <Button
                     android:id="@+id/btnAdd"
                     android:layout_width="match_parent"

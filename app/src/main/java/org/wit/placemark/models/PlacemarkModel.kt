@@ -1,5 +1,18 @@
 package org.wit.placemark.models
 
-data class PlacemarkModel(var title: String = "")
+
+
+class PlacemarkModel() {
+
+    var title : String = ""
+    var description : String = ""
+
+    get() = field
+
+    set(value) {
+        field = value
+    }
+
+}
 
 
