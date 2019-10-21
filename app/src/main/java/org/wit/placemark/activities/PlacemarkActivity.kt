@@ -23,16 +23,14 @@ class PlacemarkActivity : AppCompatActivity(), AnkoLogger {
             val title = placemarkTitle.text.toString()
             val description = description.text.toString()
 
-            if (title.isNotEmpty() && description.isNotEmpty()) {
+            if (title.isNotEmpty() || description.isNotEmpty()) {
                 info("Add Button Pressed")
 
                 val pm = PlacemarkModel(title, description)
                 placemarks.add(pm)
 
-                for(i in placemarks) {
-                    println("\n Index: ${placemarks.indexOf(i)}")
-                    println("Title: ${i.title}")
-                    println("Description: ${i.description}")
+                for(i in placemarks.indices) {
+                    println("Placemark[$i]: Title: ${placemarks[i].title}, Description: ${placemarks[i].description} ${this.placemarks[i]}")
                 }
             }
             else {
