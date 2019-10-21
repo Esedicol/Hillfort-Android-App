@@ -20,16 +20,13 @@ class PlacemarkActivity : AppCompatActivity(), AnkoLogger {
 
         info("Placemark Activity started..")
         btnAdd.setOnClickListener() {
-            val placemarkTitle = placemarkTitle.text.toString()
+            val title = placemarkTitle.text.toString()
             val description = description.text.toString()
 
-            if (placemarkTitle.isNotEmpty() && description.isNotEmpty()) {
+            if (title.isNotEmpty() && description.isNotEmpty()) {
                 info("Add Button Pressed")
 
-                val pm = PlacemarkModel()
-                pm.title = placemarkTitle
-                pm.description = description
-
+                val pm = PlacemarkModel(title, description)
                 placemarks.add(pm)
 
                 for(i in placemarks) {
