@@ -45,7 +45,7 @@
                     android:layout_height="45dp"
                     android:layout_margin="8dp"
                     android:autofillHints=""
-                    android:hint="@string/hint_placemarkTitle"
+                    android:hint="@string/hintPlacemarkTitle"
                     android:inputType="text"
                     android:maxLength="50"
                     android:maxLines="1"

@@ -22,7 +22,7 @@ class MainActivity : AppCompatActivity(), AnkoLogger {
                 info("add Button Pressed: $placemarkTitle")
             }
             else {
-                toast("Please Enter a title")
+                info("Please Enter a title")
 
             }
         }
