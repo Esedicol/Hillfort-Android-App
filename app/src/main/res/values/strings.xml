@@ -1,11 +1,8 @@
 <resources>
-    <string name="app_name">Placemark</string>
-
-    // Add placemark //
-    <string name="button_addPlacemark">Add Placemark</string>
-    <string name="hintPlacemarkTitle">Placemark Title</string>
-
-    // Add Description //
-    <string name="button_addDescription">Add Description</string>
-    <string name="hintDescription">Brief Description ...</string>
+  <string name="app_name">Placemark</string>
+  <string name="hint_placemarkTitle">Placemark Title</string>
+  <string name="hint_placemarkDescription">Description </string>
+  <string name="button_addPlacemark">Add Placemark</string>
+  <string name="menu_addPlacemark">Add</string>
+  <string name="cancel">Cancel</string>
 </resources>

@@ -1,6 +1,5 @@
 package org.wit.placemark.models
 
-
-
-data class PlacemarkModel( val title : String = "", val description : String = "")
+data class PlacemarkModel(var title: String = "",
+                          var description: String = "")
 
