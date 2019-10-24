@@ -19,7 +19,9 @@ class PlacemarkListActivity : AppCompatActivity() {
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
     setContentView(R.layout.activity_placemark_list)
+
     app = application as MainApp
+
     toolbar.title = title
     setSupportActionBar(toolbar)
 
@@ -33,8 +35,8 @@ class PlacemarkListActivity : AppCompatActivity() {
     return super.onCreateOptionsMenu(menu)
   }
 
-  override fun onOptionsItemSelected(item: MenuItem?): Boolean {
-    when (item?.itemId) {
+  override fun onOptionsItemSelected(item: MenuItem): Boolean {
+    when (item.itemId) {
       R.id.item_add -> startActivityForResult<PlacemarkActivity>(0)
     }
     return super.onOptionsItemSelected(item)
@@ -44,7 +46,7 @@ class PlacemarkListActivity : AppCompatActivity() {
 class PlacemarkAdapter constructor(private var placemarks: List<PlacemarkModel>) : RecyclerView.Adapter<PlacemarkAdapter.MainHolder>() {
 
   override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MainHolder {
-    return MainHolder(LayoutInflater.from(parent?.context).inflate(R.layout.card_placemark, parent, false))
+    return MainHolder(LayoutInflater.from(parent.context).inflate(R.layout.card_placemark, parent, false))
   }
 
   override fun onBindViewHolder(holder: MainHolder, position: Int) {

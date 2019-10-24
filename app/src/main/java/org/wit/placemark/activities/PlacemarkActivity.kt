@@ -19,6 +19,8 @@ class PlacemarkActivity : AppCompatActivity(), AnkoLogger {
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
     setContentView(R.layout.activity_placemark)
+
+
     toolbarAdd.title = title
     setSupportActionBar(toolbarAdd)
     info("Placemark Activity started..")
@@ -28,14 +30,18 @@ class PlacemarkActivity : AppCompatActivity(), AnkoLogger {
     btnAdd.setOnClickListener() {
       placemark.title = placemarkTitle.text.toString()
       placemark.description = description.text.toString()
-      if (placemark.title.isNotEmpty()) {
+
+      if (placemark.title.isNotEmpty() || placemark.description.isNotEmpty()) {
         app.placemarks.add(placemark.copy())
-        info("add Button Pressed: ${placemark}")
+        toast("New Placemark Added: ${placemark}")
+
         for (i in app.placemarks.indices) {
-          info("Placemark[$i]:${app.placemarks[i]}")
+          println("Placemark[$i]:${app.placemarks[i]}")
         }
+
         setResult(AppCompatActivity.RESULT_OK)
         finish()
+
       } else {
         toast("Please Enter a title")
       }
