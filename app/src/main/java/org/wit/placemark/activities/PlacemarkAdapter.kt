@@ -25,8 +25,8 @@ class PlacemarkAdapter constructor(private var placemarks: List<PlacemarkModel>)
     class MainHolder constructor(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
         fun bind(placemark: PlacemarkModel) {
-            itemView.placemarkTitle.text = placemark.title
-            itemView.description.text = placemark.description
+            itemView.placemarkTitle.text = "Title: ${placemark.title}"
+            itemView.description.text = "Description: ${placemark.description}"
         }
     }
 }
