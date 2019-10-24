@@ -1,6 +1,9 @@
 package org.wit.placemark.models
 
-class PlacemarkMemStore : PlacemarkStore {
+import org.jetbrains.anko.AnkoLogger
+import org.jetbrains.anko.info
+
+class PlacemarkMemStore : PlacemarkStore, AnkoLogger {
 
     val placemarks = ArrayList<PlacemarkModel>()
 
@@ -10,5 +13,9 @@ class PlacemarkMemStore : PlacemarkStore {
 
     override fun create(placemark: PlacemarkModel) {
         placemarks.add(placemark)
+    }
+
+    fun logAll() {
+        placemarks.forEach{ info("${it}") }
     }
 }
