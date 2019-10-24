@@ -2,6 +2,7 @@ package org.wit.placemark.activities
 
 import android.os.Bundle
 import android.view.Menu
+import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
 import kotlinx.android.synthetic.main.activity_placemark.*
 import org.jetbrains.anko.AnkoLogger
@@ -47,8 +48,19 @@ class PlacemarkActivity : AppCompatActivity(), AnkoLogger {
       }
     }
   }
+
+
   override fun onCreateOptionsMenu(menu: Menu?): Boolean {
-    menuInflater.inflate(R.menu.menu_main, menu)
+    menuInflater.inflate(R.menu.cancel_menu, menu)
     return super.onCreateOptionsMenu(menu)
+  }
+
+  override fun onOptionsItemSelected(item: MenuItem): Boolean {
+    when (item.itemId) {
+      R.id.item_cancel -> {
+        finish()
+      }
+    }
+    return super.onOptionsItemSelected(item)
   }
 }

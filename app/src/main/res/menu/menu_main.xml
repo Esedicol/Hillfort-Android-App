@@ -8,8 +8,4 @@
     android:title="@string/menu_addPlacemark"
     app:showAsAction="always" />
 
-  <item
-      android:id="@+id/item_cancel"
-      android:title="@string/cancel"
-      app:showAsAction="always"/>
 </menu>
