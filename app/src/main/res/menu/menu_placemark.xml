@@ -3,8 +3,7 @@
   xmlns:app="http://schemas.android.com/apk/res-auto">
 
   <item
-    android:id="@+id/item_add"
-    android:icon="@android:drawable/ic_menu_add"
-    android:title="@string/menu_addPlacemark"
-    app:showAsAction="always" />
+    android:id="@+id/item_cancel"
+    android:title="@string/menu_cancelPlacemark"
+    app:showAsAction="always"/>
 </menu>

@@ -20,38 +20,34 @@ class PlacemarkActivity : AppCompatActivity(), AnkoLogger {
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
     setContentView(R.layout.activity_placemark)
-
-
     toolbarAdd.title = title
     setSupportActionBar(toolbarAdd)
     info("Placemark Activity started..")
 
     app = application as MainApp
 
+    if (intent.hasExtra("placemark_edit")) {
+      placemark = intent.extras?.getParcelable<PlacemarkModel>("placemark_edit")!!
+      placemarkTitle.setText(placemark.title)
+      description.setText(placemark.description)
+    }
+
     btnAdd.setOnClickListener() {
       placemark.title = placemarkTitle.text.toString()
       placemark.description = description.text.toString()
-
-      if (placemark.title.isNotEmpty() || placemark.description.isNotEmpty()) {
+      if (placemark.title.isNotEmpty()) {
         app.placemarks.create(placemark.copy())
-        toast("New Placemark Added: ${placemark}")
-
-        for (i in app.placemarks.findAll().indices) {
-          println("Placemark[$i]:${app.placemarks.findAll()[i]}")
-        }
-
+        info("add Button Pressed: $placemarkTitle")
         setResult(AppCompatActivity.RESULT_OK)
         finish()
-
       } else {
         toast("Please Enter a title")
       }
     }
   }
 
-
   override fun onCreateOptionsMenu(menu: Menu?): Boolean {
-    menuInflater.inflate(R.menu.cancel_menu, menu)
+    menuInflater.inflate(R.menu.menu_placemark, menu)
     return super.onCreateOptionsMenu(menu)
   }
 
@@ -64,3 +60,4 @@ class PlacemarkActivity : AppCompatActivity(), AnkoLogger {
     return super.onOptionsItemSelected(item)
   }
 }
+
