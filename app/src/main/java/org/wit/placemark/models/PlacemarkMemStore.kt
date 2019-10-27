@@ -31,6 +31,20 @@ class PlacemarkMemStore : PlacemarkStore, AnkoLogger {
         }
     }
 
+    override fun delete(placemark: PlacemarkModel) {
+        var foundPlacemark: PlacemarkModel? = placemarks.find {
+                p -> p.id == placemark.id
+        }
+
+        if(foundPlacemark != null) {
+            for(x in placemarks) {
+                if (x.id.equals(foundPlacemark)) {
+                    placemarks.remove(x)
+                }
+            }
+        }
+    }
+
     internal fun logAll() {
         placemarks.forEach { info("${it}") }
     }
