@@ -6,4 +6,14 @@
         android:id="@+id/item_cancel"
         android:title="@string/menu_cancelPlacemark"
         app:showAsAction="always"/>
+    <item
+        android:id="@+id/logout"
+        android:orderInCategory="100"
+        android:title="@string/logout"
+        app:showAsAction="never" />
+    <item
+        android:id="@+id/login"
+        android:orderInCategory="100"
+        android:title="@string/login"
+        app:showAsAction="never" />
 </menu>
