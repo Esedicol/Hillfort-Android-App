@@ -6,46 +6,32 @@ import org.jetbrains.anko.info
 var lastId = 0L
 
 internal fun getId(): Long {
-    return lastId++
+  return lastId++
 }
 
 class PlacemarkMemStore : PlacemarkStore, AnkoLogger {
 
-    val placemarks = ArrayList<PlacemarkModel>()
+  val placemarks = ArrayList<PlacemarkModel>()
 
-    override fun findAll(): List<PlacemarkModel> {
-        return placemarks
+  override fun findAll(): List<PlacemarkModel> {
+    return placemarks
+  }
+
+  override fun create(placemark: PlacemarkModel) {
+    placemark.id = getId()
+    placemarks.add(placemark)
+    logAll()
+  }
+
+  override fun update(placemark: PlacemarkModel) {
+    var foundPlacemark: PlacemarkModel? = placemarks.find { p -> p.id == placemark.id }
+    if (foundPlacemark != null) {
+      foundPlacemark.title = placemark.title
+      foundPlacemark.description = placemark.description
     }
+  }
 
-    override fun create(placemark: PlacemarkModel) {
-        placemark.id = getId()
-        placemarks.add(placemark)
-        logAll()
-    }
-
-    override fun update(placemark: PlacemarkModel) {
-        var foundPlacemark: PlacemarkModel? = placemarks.find { p -> p.id == placemark.id }
-        if (foundPlacemark != null) {
-            foundPlacemark.title = placemark.title
-            foundPlacemark.description = placemark.description
-        }
-    }
-
-    override fun delete(placemark: PlacemarkModel) {
-        var foundPlacemark: PlacemarkModel? = placemarks.find {
-                p -> p.id == placemark.id
-        }
-
-        if(foundPlacemark != null) {
-            for(x in placemarks) {
-                if (x.id.equals(foundPlacemark)) {
-                    placemarks.remove(x)
-                }
-            }
-        }
-    }
-
-    internal fun logAll() {
-        placemarks.forEach { info("${it}") }
-    }
+  internal fun logAll() {
+    placemarks.forEach { info("${it}") }
+  }
 }

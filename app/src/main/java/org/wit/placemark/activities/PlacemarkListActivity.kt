@@ -1,11 +1,12 @@
 package org.wit.placemark.activities
 
 import android.os.Bundle
-import android.view.Menu
-import android.view.MenuItem
+import android.view.*
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import kotlinx.android.synthetic.main.activity_placemark_list.*
+import kotlinx.android.synthetic.main.card_placemark.view.*
 import org.jetbrains.anko.intentFor
 import org.jetbrains.anko.startActivityForResult
 import org.wit.placemark.R
@@ -33,8 +34,8 @@ class PlacemarkListActivity : AppCompatActivity(), PlacemarkListener {
     return super.onCreateOptionsMenu(menu)
   }
 
-  override fun onOptionsItemSelected(item: MenuItem): Boolean {
-    when (item.itemId) {
+  override fun onOptionsItemSelected(item: MenuItem?): Boolean {
+    when (item?.itemId) {
       R.id.item_add -> startActivityForResult<PlacemarkActivity>(0)
     }
     return super.onOptionsItemSelected(item)
