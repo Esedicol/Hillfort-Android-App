@@ -1,4 +1,4 @@
-package org.wit.hilforts
+package org.wit.placemark
 
 import org.junit.Test
 
