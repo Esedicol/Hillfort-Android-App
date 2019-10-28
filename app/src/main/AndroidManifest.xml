@@ -33,10 +33,6 @@
         <activity
             android:name=".activities.MapActivity"
             android:label="@string/title_activity_map"></activity>
-        <activity
-            android:name=".drawer"
-            android:label="@string/title_activity_drawer"
-            android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".activities.PlacemarkActivity" />
         <activity android:name=".activities.PlacemarkListActivity">
             <intent-filter>

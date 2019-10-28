@@ -92,4 +92,3 @@ class PlacemarkActivity : AppCompatActivity(), AnkoLogger {
         }
     }
 }
-
