@@ -25,8 +25,10 @@ class PlacemarkActivity : AppCompatActivity(), AnkoLogger {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_placemark)
+
         toolbarAdd.title = title
         setSupportActionBar(toolbarAdd)
+
         info("Placemark Activity started..")
 
         app = application as MainApp
@@ -70,9 +72,9 @@ class PlacemarkActivity : AppCompatActivity(), AnkoLogger {
 
     override fun onOptionsItemSelected(item: MenuItem?): Boolean {
         when (item?.itemId) {
-            R.id.item_cancel -> {
-                finish()
-            }
+            R.id.item_cancel -> finish()
+            R.id.login -> toast("Logging In")
+            R.id.logout -> toast("Logging Out")
         }
         return super.onOptionsItemSelected(item)
     }

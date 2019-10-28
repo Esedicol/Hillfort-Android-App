@@ -10,6 +10,7 @@ import kotlinx.android.synthetic.main.activity_placemark_list.*
 import kotlinx.android.synthetic.main.card_placemark.view.*
 import org.jetbrains.anko.intentFor
 import org.jetbrains.anko.startActivityForResult
+import org.jetbrains.anko.toast
 import org.wit.placemark.R
 import org.wit.placemark.main.MainApp
 import org.wit.placemark.models.PlacemarkModel
@@ -38,6 +39,8 @@ class PlacemarkListActivity : AppCompatActivity(), PlacemarkListener {
     override fun onOptionsItemSelected(item: MenuItem?): Boolean {
         when (item?.itemId) {
             R.id.item_add -> startActivityForResult<PlacemarkActivity>(0)
+            R.id.login -> toast("Logging In")
+            R.id.logout -> toast("Logging Out")
         }
         return super.onOptionsItemSelected(item)
     }
