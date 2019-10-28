@@ -21,4 +21,6 @@
     <string name="select_placemark_image">Select placemark image</string>
     <string name="change_placemark_image">Change placemark image</string>
 
+    <string name="date_visited">Date Visited ( Day - Month - Year )</string>
+
 </resources>
