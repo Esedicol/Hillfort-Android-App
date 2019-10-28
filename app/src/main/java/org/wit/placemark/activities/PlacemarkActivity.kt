@@ -29,23 +29,24 @@ class PlacemarkActivity : AppCompatActivity(), AnkoLogger {
         toolbarAdd.title = title
         setSupportActionBar(toolbarAdd)
 
-        info("Placemark Activity started..")
-
         app = application as MainApp
         var edit = false
 
         if (intent.hasExtra("placemark_edit")) {
             edit = true
             placemark = intent.extras?.getParcelable<PlacemarkModel>("placemark_edit")!!
+
             placemarkTitle.setText(placemark.title)
             description.setText(placemark.description)
             placemarkImage.setImageBitmap(readImageFromPath(this, placemark.image))
+
             btnAdd.setText(R.string.save_placemark)
         }
 
         btnAdd.setOnClickListener() {
             placemark.title = placemarkTitle.text.toString()
             placemark.description = description.text.toString()
+
             if (placemark.title.isEmpty()) {
                 toast(R.string.enter_placemark_title)
             } else {
