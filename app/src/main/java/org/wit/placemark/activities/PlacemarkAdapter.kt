@@ -10,6 +10,7 @@ import org.wit.placemark.models.PlacemarkModel
 
 interface PlacemarkListener {
     fun onPlacemarkClick(placemark: PlacemarkModel)
+    fun del(placemark: PlacemarkModel)
 }
 
 class PlacemarkAdapter constructor(private var placemarks: List<PlacemarkModel>,
@@ -32,6 +33,7 @@ class PlacemarkAdapter constructor(private var placemarks: List<PlacemarkModel>,
             itemView.placemarkTitle.text = placemark.title
             itemView.description.text = placemark.description
             itemView.setOnClickListener { listener.onPlacemarkClick(placemark) }
+            itemView.delete_placemark.setOnClickListener{listener.del(placemark)}
         }
     }
 }

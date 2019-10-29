@@ -34,4 +34,8 @@ class PlacemarkMemStore : PlacemarkStore, AnkoLogger {
     internal fun logAll() {
         placemarks.forEach { info("${it}") }
     }
+
+    override fun delete(placemark: PlacemarkModel) {
+        placemarks.remove(placemark)
+    }
 }

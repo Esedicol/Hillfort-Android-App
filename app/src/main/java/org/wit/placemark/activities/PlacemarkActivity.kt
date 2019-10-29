@@ -32,7 +32,7 @@ class PlacemarkActivity : AppCompatActivity(), AnkoLogger {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_placemark)
+        setContentView(R.layout.main_layout)
         toolbarAdd.title = title
         setSupportActionBar(toolbarAdd)
         info("Placemark Activity started..")

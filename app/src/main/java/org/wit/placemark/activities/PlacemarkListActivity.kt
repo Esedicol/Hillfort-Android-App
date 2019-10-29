@@ -28,7 +28,7 @@ class PlacemarkListActivity : AppCompatActivity(), PlacemarkListener {
 
         val layoutManager = LinearLayoutManager(this)
         recyclerView.layoutManager = layoutManager
-        recyclerView.adapter = PlacemarkAdapter(app.placemarks.findAll(), this)
+        loadPlacemarks()
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
@@ -50,7 +50,22 @@ class PlacemarkListActivity : AppCompatActivity(), PlacemarkListener {
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        recyclerView.adapter?.notifyDataSetChanged()
+        loadPlacemarks()
         super.onActivityResult(requestCode, resultCode, data)
+    }
+
+
+    override fun del(placemark: PlacemarkModel) {
+        app.placemarks.delete(placemark)
+        loadPlacemarks()
+    }
+
+    private fun loadPlacemarks() {
+        showPlacemarks(app.placemarks.findAll())
+    }
+
+    fun showPlacemarks (placemarks: List<PlacemarkModel>) {
+        recyclerView.adapter = PlacemarkAdapter(placemarks, this)
+        recyclerView.adapter?.notifyDataSetChanged()
     }
 }

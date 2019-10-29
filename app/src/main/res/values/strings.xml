@@ -19,7 +19,11 @@
     <string name="select_placemark_image">Select placemark image</string>
     <string name="change_placemark_image">Change placemark image</string>
 
-    <string name="date_visited">Date Visited ( Day - Month - Year )</string>
+    <string name="visited">Hillfort Visited</string>
+
+    // Lat and Lng //
+    <string name="hint_lat">Lat:    00.000000 </string>
+    <string name="hint_lng">Lng:    00.000000 </string>
 
     // Authentication //
     <string name="name">Name</string>
