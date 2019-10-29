@@ -16,7 +16,7 @@ fun generateRandomId(): Long {
   return Random().nextLong()
 }
 
-class PlacemarkJSONStore : PlacemarkStore, AnkoLogger {
+class PlacemarkJSONStore : Store, AnkoLogger {
 
   val context: Context
   var placemarks = mutableListOf<PlacemarkModel>()
@@ -66,5 +66,25 @@ class PlacemarkJSONStore : PlacemarkStore, AnkoLogger {
   private fun deserialize() {
     val jsonString = read(context, JSON_FILE)
     placemarks = Gson().fromJson(jsonString, listType)
+  }
+
+  override fun findAllUsers(): List<UserModel> {
+    TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+  }
+
+  override fun findUser(id: Long): UserModel? {
+    TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+  }
+
+  override fun createUser(user: UserModel) {
+    TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+  }
+
+  override fun updateUser(user: UserModel) {
+    TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+  }
+
+  override fun deleteUser(user: UserModel) {
+    TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
   }
 }

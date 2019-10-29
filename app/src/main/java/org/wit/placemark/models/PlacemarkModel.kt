@@ -11,7 +11,12 @@ data class PlacemarkModel(var id: Long = 0,
                           var lat : Double = 0.0,
                           var lng: Double = 0.0,
                           var zoom: Float = 0f,
-                          var note: String = "") : Parcelable
+                          var note: String = "",
+                          var image_list : ArrayList<String> = ArrayList(),  // Lists to display multiple images
+                          var check_box : Boolean = false,
+                          var dateVisited : String = ""
+
+): Parcelable
 
 @Parcelize
 data class Location(var lat: Double = 0.0,

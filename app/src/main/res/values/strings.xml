@@ -1,18 +1,21 @@
 <resources>
-    <string name="app_name">Placemark</string>
-    <string name="hint_placemarkTitle">Placemark Title</string>
+    <string name="app_name">Hillfort</string>
+
+    <string name="hint_placemarkTitle">Hillfort Name</string>
     <string name="hint_placemarkDescription">Description </string>
+    <string name="enter_placemark_title"> Please enter a Placemark Title </string>
+
+    // tool bar //
     <string name="button_save">Save</string>
     <string name="menu_addPlacemark">Add</string>
     <string name="menu_cancelPlacemark">Cancel</string>
-    <string name="enter_placemark_title"> Please enter a Placemark Title </string>
 
-    <string name="save_placemark"> Save Placemark </string>
     <string name="button_addImage"> Add Image </string>
+    <string name="button_location">Set Location</string>
+
+    // Card Delete Button//
     <string name="button_delete">Delete</string>
 
-
-    <string name="button_location">Set Location</string>
     <string name="title_activity_map">Map</string>
     <string name="google_maps_key">AIzaSyCN0dtjmqaSf0M89CuQdqk57XjGzN5gcP0</string>
 
