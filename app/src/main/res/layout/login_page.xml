@@ -13,9 +13,13 @@
         android:layout_marginHorizontal="50dp"
         android:hint="@string/email"
         android:inputType="textEmailAddress"
-        tools:layout_editor_absoluteX="99dp"
-        tools:layout_editor_absoluteY="209dp"
-        tools:ignore="MissingConstraints"/>
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.161"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.288"
+        tools:ignore="MissingConstraints" />
 
     <EditText
         android:id="@+id/loginPassword"
@@ -24,17 +28,24 @@
         android:layout_marginHorizontal="50dp"
         android:hint="@string/pass"
         android:inputType="textPassword"
-        tools:layout_editor_absoluteX="99dp"
-        tools:layout_editor_absoluteY="275dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.505"
+        app:layout_constraintStart_toStartOf="@+id/linearLayout"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.406"
         tools:ignore="MissingConstraints" />
 
     <LinearLayout
+        android:id="@+id/linearLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="360dp"
         android:orientation="horizontal"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        tools:layout_editor_absoluteX="0dp">
+        app:layout_constraintVertical_bias="0.0"
+        tools:layout_editor_absoluteX="-33dp">
 
         <Button
             android:id="@+id/loginButton"
@@ -43,14 +54,14 @@
             android:layout_marginLeft="50dp"
             android:layout_marginRight="10dp"
             android:background="@color/colorAccent"
-            android:text="@string/login"/>
+            android:text="@string/login" />
 
         <Button
             android:id="@+id/back"
             android:layout_width="150dp"
             android:layout_height="40dp"
-            android:layout_marginRight="40dp"
             android:layout_marginLeft="10dp"
+            android:layout_marginRight="40dp"
             android:background="@color/colorAccent"
             android:text="back" />
 
