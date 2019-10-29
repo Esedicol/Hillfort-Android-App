@@ -9,6 +9,8 @@
     <string name="button_save">Save</string>
     <string name="menu_addPlacemark">Add</string>
     <string name="menu_cancelPlacemark">Cancel</string>
+    <string name="stats">Stats</string>
+    <string name="settings">Settings</string>
 
     <string name="button_addImage"> Add Image </string>
     <string name="button_location">Set Location</string>
