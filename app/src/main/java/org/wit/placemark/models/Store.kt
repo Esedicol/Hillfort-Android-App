@@ -1,10 +1,12 @@
 package org.wit.placemark.models
 
 interface Store {
-    fun findAll(): List<PlacemarkModel>
-    fun create(placemark: PlacemarkModel)
-    fun update(placemark: PlacemarkModel)
-    fun delete(placemark: PlacemarkModel)
+
+    // Each variable will be assigned to a certain user, so we will need to pass in the user as a parameter for each function
+    fun findAll(user : UserModel): List<PlacemarkModel>
+    fun create(user : UserModel, placemark: PlacemarkModel)
+    fun update(user : UserModel, placemark: PlacemarkModel)
+    fun delete(user : UserModel, placemark: PlacemarkModel)
 
     // Functions for users //
     fun findAllUsers() : List<UserModel>

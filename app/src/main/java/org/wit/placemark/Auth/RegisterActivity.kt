@@ -30,7 +30,14 @@ class RegisterActivity : AppCompatActivity() {
             user.email = regEmail.text.toString()
             user.password = regPassword.text.toString()
 
-            // 1) Check if user exist
+            // 1) Check if user exist using (findByEmail) function
+            val emailExists = app.placemarks.findByEmail(user.email)
+
+            if(emailExists == null) {
+                if(user.name.isNotEmpty() && user.email.isNotEmpty() && user.password.isNotEmpty()) {
+
+                }
+            }
             // 2) add user
         }
 
