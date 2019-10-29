@@ -23,4 +23,8 @@
 
     <string name="date_visited">Date Visited ( Day - Month - Year )</string>
 
+    // Authentication Login //
+    <string name="email">Email</string>
+    <string name="pass">Password</string>
+
 </resources>
