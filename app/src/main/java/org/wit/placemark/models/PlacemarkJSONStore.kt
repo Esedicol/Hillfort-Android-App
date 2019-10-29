@@ -100,4 +100,21 @@ class PlacemarkJSONStore : Store, AnkoLogger {
     }
     return null
   }
+
+  override fun findAll(user: UserModel): List<PlacemarkModel> {
+    TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+  }
+
+  override fun create(user: UserModel, placemark: PlacemarkModel) {
+    TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+  }
+
+  override fun update(user: UserModel, placemark: PlacemarkModel) {
+    TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+  }
+
+  override fun delete(user: UserModel, placemark: PlacemarkModel) {
+    TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+  }
 }
+
