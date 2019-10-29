@@ -5,13 +5,13 @@ import android.os.Bundle
 import android.view.*
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import kotlinx.android.synthetic.main.activity_placemark_list.*
-import kotlinx.android.synthetic.main.card_placemark.view.*
 import org.jetbrains.anko.intentFor
 import org.jetbrains.anko.startActivityForResult
 import org.jetbrains.anko.toast
 import org.wit.placemark.R
+import org.wit.placemark.adapters.PlacemarkAdapter
+import org.wit.placemark.adapters.PlacemarkListener
 import org.wit.placemark.main.MainApp
 import org.wit.placemark.models.PlacemarkModel
 
