@@ -40,28 +40,53 @@ class PlacemarkJSONStore : Store, AnkoLogger {
     }
 
 
-
+    //////////////////////////// USER CRUD ////////////////////////////
     override fun findAllUsers(): List<UserModel> {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        return users
     }
 
     override fun findUser(id: Long): UserModel? {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        val foundUser: UserModel? = users.find { p ->
+            p.id == id
+        }
+        return foundUser
     }
 
     override fun createUser(user: UserModel) {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        user.id = generateRandomId()
+        users.add(user)
+        serialize()
     }
 
     override fun updateUser(user: UserModel) {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        val foundUser: UserModel? = users.find { p ->
+            p.id == user.id
+        }
+
+        if (foundUser != null) {
+            foundUser.id = user.id
+            foundUser.name = user.name
+            foundUser.email = user.email
+            foundUser.password = user.password
+            foundUser.placemark = user.placemark
+        }
+        serialize()
     }
+
 
     override fun deleteUser(user: UserModel) {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        val foundUser: UserModel? = users.find { p ->
+            p.id == user.id
+        }
+
+        if (foundUser != null) {
+            users.remove(foundUser)
+            serialize()
+        }
     }
 
 
+    //////////////////////////// PLACEMARK CRUD ////////////////////////////
     override fun findByEmail(email: String): UserModel? {
         // 1) iterate through list of user
         for (user in users) {
