@@ -39,7 +39,6 @@ class PlacemarkListActivity : AppCompatActivity(), PlacemarkListener {
     override fun onOptionsItemSelected(item: MenuItem?): Boolean {
         when (item?.itemId) {
             R.id.item_add -> startActivityForResult<PlacemarkActivity>(0)
-            R.id.login -> toast("Logging In")
             R.id.logout -> toast("Logging Out")
         }
         return super.onOptionsItemSelected(item)

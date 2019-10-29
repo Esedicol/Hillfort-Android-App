@@ -1,10 +1,11 @@
-package org.wit.placemark.activities
+package org.wit.placemark.splash
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Handler
 import org.jetbrains.anko.intentFor
 import org.wit.placemark.R
+import org.wit.placemark.activities.InitialActivity
 import org.wit.placemark.main.MainApp
 
 

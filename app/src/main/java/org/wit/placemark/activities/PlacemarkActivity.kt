@@ -33,9 +33,9 @@ class PlacemarkActivity : AppCompatActivity(), AnkoLogger {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.main_layout)
+
         toolbarAdd.title = title
         setSupportActionBar(toolbarAdd)
-        info("Placemark Activity started..")
 
         app = application as MainApp
 
@@ -66,7 +66,6 @@ class PlacemarkActivity : AppCompatActivity(), AnkoLogger {
         when (item?.itemId) {
             R.id.item_cancel -> finish()
             R.id.logout -> toast("Loggin out")
-            R.id.login -> toast("Logging In")
             R.id.btnAdd -> {
                 placemark.title = placemarkTitle.text.toString()
                 placemark.description = description.text.toString()
