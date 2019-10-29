@@ -12,4 +12,7 @@ interface Store {
     fun createUser(user: UserModel)
     fun updateUser(user: UserModel)
     fun deleteUser(user: UserModel)
+
+    // Find user by email to be use during authentication //
+    fun findByEmail(email : String) : UserModel?
 }

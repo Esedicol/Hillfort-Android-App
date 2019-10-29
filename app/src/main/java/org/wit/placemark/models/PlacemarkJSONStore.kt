@@ -10,7 +10,7 @@ import java.util.*
 
 val JSON_FILE = "placemarks.json"
 val gsonBuilder = GsonBuilder().setPrettyPrinting().create()
-val listType = object : TypeToken<java.util.ArrayList<PlacemarkModel>>() {}.type
+val listType = object : TypeToken<ArrayList<PlacemarkModel>>() {}.type
 
 fun generateRandomId(): Long {
   return Random().nextLong()
@@ -20,6 +20,7 @@ class PlacemarkJSONStore : Store, AnkoLogger {
 
   val context: Context
   var placemarks = mutableListOf<PlacemarkModel>()
+  var users = mutableListOf<UserModel>()
 
   constructor (context: Context) {
     this.context = context
@@ -86,5 +87,17 @@ class PlacemarkJSONStore : Store, AnkoLogger {
 
   override fun deleteUser(user: UserModel) {
     TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+  }
+
+
+  override fun findByEmail(email: String): UserModel? {
+    // 1) iterate through list of user
+    for (user in users) {
+      // 2) Comapare
+      if (user.email == email) {
+        return user
+      }
+    }
+    return null
   }
 }
