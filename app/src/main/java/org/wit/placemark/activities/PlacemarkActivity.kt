@@ -60,11 +60,11 @@ class PlacemarkActivity : AppCompatActivity(), AnkoLogger {
             val imgAdp = ImageAdapter(placemark.image_list, this)
             placemarkImage.adapter = imgAdp
 
-            val newLat = placemark.location.lat
-            val newLng = placemark.location.lng
+            val newLng = "%.6f".format(placemark.location.lng)
+            val newLat = "%.6f".format(placemark.location.lat)
 
-            lat.setText(newLat.toString())
-            lng.setText(newLng.toString())
+            lng.text = "Lng:    ${newLng}"
+            lat.text = "Lat:    ${newLat}"
         }
 
         chooseImage.setOnClickListener {
@@ -98,8 +98,8 @@ class PlacemarkActivity : AppCompatActivity(), AnkoLogger {
                 placemark.description = description.text.toString()
                 val x = findViewById<CalendarView>(R.id.dateVisited)
 
-                val newLat = placemark.location.lat
-                val newLng = placemark.location.lng
+                val newLat = "%.6f".format(placemark.location.lat)
+                val newLng = "%.6f".format(placemark.location.lng)
 
                 lat.setText(newLat.toString())
                 lng.setText(newLng.toString())

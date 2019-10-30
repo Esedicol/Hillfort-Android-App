@@ -19,7 +19,6 @@ fun generateRandomId(): Long {
 class PlacemarkJSONStore : Store, AnkoLogger {
 
     val context: Context
-    var placemarks = mutableListOf<PlacemarkModel>()
     var users = mutableListOf<UserModel>()
 
     constructor (context: Context) {
@@ -30,13 +29,13 @@ class PlacemarkJSONStore : Store, AnkoLogger {
     }
 
     private fun serialize() {
-        val jsonString = gsonBuilder.toJson(placemarks, listType)
+        val jsonString = gsonBuilder.toJson(users, listType)
         write(context, JSON_FILE, jsonString)
     }
 
     private fun deserialize() {
         val jsonString = read(context, JSON_FILE)
-        placemarks = Gson().fromJson(jsonString, listType)
+        users = Gson().fromJson(jsonString, listType)
     }
 
 
@@ -45,17 +44,14 @@ class PlacemarkJSONStore : Store, AnkoLogger {
         return users
     }
 
-    override fun findUser(id: Long): UserModel? {
-        val foundUser: UserModel? = users.find { p ->
-            p.id == id
-        }
-        return foundUser
+    override fun findByEmail(email: String): UserModel? {
+        return users.find { p -> p.email == email }
     }
 
-    override fun createUser(user: UserModel) {
-        user.id = generateRandomId()
-        users.add(user)
-        serialize()
+    override fun createUser(user: UserModel){
+            user.id = generateRandomId()
+            users.add(user)
+            serialize()
     }
 
     override fun updateUser(user: UserModel) {
@@ -87,17 +83,6 @@ class PlacemarkJSONStore : Store, AnkoLogger {
 
 
     //////////////////////////// PLACEMARK CRUD ////////////////////////////
-    override fun findByEmail(email: String): UserModel? {
-        // 1) iterate through list of user
-        for (user in users) {
-            // 2) Comapare
-            if (user.email == email) {
-                return user
-            }
-        }
-        return null
-    }
-
     override fun findAll(user: UserModel): List<PlacemarkModel> {
         return user.placemark
     }
@@ -130,8 +115,8 @@ class PlacemarkJSONStore : Store, AnkoLogger {
         }
     }
 
-    override fun delete(placemark: PlacemarkModel) {
-        placemarks.remove(placemark)
+    override fun delete(user: UserModel, placemark: PlacemarkModel) {
+        user.placemark.remove(placemark)
         serialize()
     }
 

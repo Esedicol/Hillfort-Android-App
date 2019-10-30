@@ -6,11 +6,10 @@ interface Store {
     fun findAll(user : UserModel): List<PlacemarkModel>
     fun create(user : UserModel, placemark: PlacemarkModel)
     fun update(user : UserModel, placemark: PlacemarkModel)
-    fun delete(placemark: PlacemarkModel)
+    fun delete(user : UserModel, placemark: PlacemarkModel)
 
     // Functions for users //
     fun findAllUsers() : List<UserModel>
-    fun findUser(id : Long) : UserModel?
     fun createUser(user: UserModel)
     fun updateUser(user: UserModel)
     fun deleteUser(user: UserModel)

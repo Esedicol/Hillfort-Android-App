@@ -7,10 +7,11 @@ import androidx.recyclerview.widget.RecyclerView
 import kotlinx.android.synthetic.main.card_placemark.view.*
 import org.wit.placemark.R
 import org.wit.placemark.models.PlacemarkModel
+import org.wit.placemark.models.UserModel
 
 interface PlacemarkListener {
     fun onPlacemarkClick(placemark: PlacemarkModel)
-    fun del(placemark: PlacemarkModel)
+    fun del(user : UserModel, placemark: PlacemarkModel)
 }
 
 class PlacemarkAdapter constructor(private var placemarks: List<PlacemarkModel>,
@@ -40,7 +41,7 @@ class PlacemarkAdapter constructor(private var placemarks: List<PlacemarkModel>,
             itemView.placemarkTitle.text = placemark.title
             itemView.description.text = placemark.description
             itemView.setOnClickListener { listener.onPlacemarkClick(placemark) }
-            itemView.delete_placemark.setOnClickListener{listener.del(placemark)}
+//            itemView.delete_placemark.setOnClickListener{listener.del(placemark)}
         }
     }
 }

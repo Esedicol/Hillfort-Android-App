@@ -1,5 +1,6 @@
 package org.wit.placemark.Auth
 
+import android.graphics.Color
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import kotlinx.android.synthetic.main.login_page.*
@@ -13,6 +14,7 @@ import org.wit.placemark.main.MainApp
 
 class LoginActivity : AppCompatActivity() {
 
+    val emailRegex = "^[A-Za-z](.*)([@]{1})(.{1,})(\\.)(.{1,})";
     lateinit var app : MainApp
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -22,31 +24,36 @@ class LoginActivity : AppCompatActivity() {
         app = application as MainApp
 
         loginButton.setOnClickListener {
-            val users = app.placemarks.findAllUsers()
-
             val email = loginEmail.text.toString()
             val password = loginPassword.text.toString()
 
-            if(email.isEmpty() || password.isEmpty()) {
+            if (email == "" || password == "") {
                 toast(" !! ERROR EMPTY INPUTS !!")
             } else {
-                for(x in users) {
-                    if(x.email == email  && x.password == password) {
+                // check if Email format is valid before login
+                if (isEmailValid(email)) {
+                    val user = app.placemarks.findByEmail(email)
 
-                        app.user = app.placemarks.findUser(x.id)!!
-                        toast("LOGGING IN ......")
-                        startActivity(intentFor<PlacemarkActivity>())
-                        finish()
-                    } else {
-                        toast("!! ERROR INVALID INPUTS !!")
-                    }
+                        if (user != null && user.password == password) {
+                            toast("LOGGING IN ......")
+                            startActivity(intentFor<PlacemarkActivity>())
+                            finish()
+                        } else {
+                            toast("!! ERROR INVALID INPUTS !!")
+                        }
+                } else {
+                    toast("Invalid email format !!")
                 }
             }
-        }
 
-        back.setOnClickListener {
-            startActivity(intentFor<InitialActivity>())
-            finish()
+            back.setOnClickListener {
+                startActivity(intentFor<InitialActivity>())
+                finish()
+            }
         }
     }
+
+        fun isEmailValid(email: String): Boolean {
+            return emailRegex.toRegex().matches(email);
+        }
 }
