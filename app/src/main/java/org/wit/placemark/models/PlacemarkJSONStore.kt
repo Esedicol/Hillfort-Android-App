@@ -10,7 +10,7 @@ import java.util.*
 
 val JSON_FILE = "test.json"
 val gsonBuilder = GsonBuilder().setPrettyPrinting().create()
-val listType = object : TypeToken<ArrayList<PlacemarkModel>>() {}.type
+val listType = object : TypeToken<java.util.ArrayList<PlacemarkModel>>() {}.type
 
 fun generateRandomId(): Long {
     return Random().nextLong()
@@ -44,14 +44,16 @@ class PlacemarkJSONStore : Store, AnkoLogger {
         return users
     }
 
-    override fun findByEmail(email: String): UserModel? {
+    override fun findUserByEmail(email: String): UserModel? {
         return users.find { p -> p.email == email }
     }
 
-    override fun createUser(user: UserModel){
+    override fun createUser(user: UserModel) {
+        if(findUserByEmail(user.email) == null) {
             user.id = generateRandomId()
             users.add(user)
             serialize()
+        }
     }
 
     override fun updateUser(user: UserModel) {

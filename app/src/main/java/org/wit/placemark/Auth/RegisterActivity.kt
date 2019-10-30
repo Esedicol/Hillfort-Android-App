@@ -1,12 +1,7 @@
 package org.wit.placemark.Auth
 
-import android.content.Intent
-import android.graphics.Color
 import android.os.Bundle
-import android.os.UserManager
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.content.ContextCompat.startActivity
-import kotlinx.android.synthetic.main.login_page.*
 import kotlinx.android.synthetic.main.register_page.*
 import kotlinx.android.synthetic.main.register_page.back
 import org.jetbrains.anko.intentFor
@@ -39,10 +34,6 @@ class RegisterActivity : AppCompatActivity() {
                     toast("!! ERROR EMPTY INPUTS !!")
                 } else {
                     if (isEmailValid(email)) {
-                        val checkIfUserExisits = app.placemarks.findByEmail(email)
-
-                        if (checkIfUserExisits == null) {
-
                             val user = UserModel()
 
                             user.name = name
@@ -54,7 +45,7 @@ class RegisterActivity : AppCompatActivity() {
                             toast("New user created: ${user.name}")
                             startActivity(intentFor<LoginActivity>())
                             finish()
-                        }
+
                     } else {
                         toast("!! Invalid Email Format !!")
                     }

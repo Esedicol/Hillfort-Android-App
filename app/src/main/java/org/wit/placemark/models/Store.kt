@@ -15,5 +15,5 @@ interface Store {
     fun deleteUser(user: UserModel)
 
     // Find user by email to be use during authentication //
-    fun findByEmail(email : String) : UserModel?
+    fun findUserByEmail(email : String) : UserModel?
 }
