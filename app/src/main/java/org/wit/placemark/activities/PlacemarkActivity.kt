@@ -15,13 +15,12 @@ import org.jetbrains.anko.intentFor
 import org.jetbrains.anko.toast
 import org.wit.placemark.R
 import org.wit.placemark.adapters.ImageAdapter
-import org.wit.placemark.helpers.readImage
-import org.wit.placemark.helpers.readImageFromPath
 import org.wit.placemark.helpers.showImagePicker
 import org.wit.placemark.main.MainApp
 import org.wit.placemark.models.Location
 import org.wit.placemark.models.PlacemarkModel
 import org.wit.placemark.models.UserModel
+import java.text.SimpleDateFormat
 
 class PlacemarkActivity : AppCompatActivity(), AnkoLogger {
 
@@ -34,6 +33,7 @@ class PlacemarkActivity : AppCompatActivity(), AnkoLogger {
     val LOCATION_REQUEST = 2
 
     var location = Location(52.245696, -7.139102, 15f)
+    var date = String()
 
     var edit = false
 
@@ -45,12 +45,14 @@ class PlacemarkActivity : AppCompatActivity(), AnkoLogger {
         setSupportActionBar(toolbarAdd)
 
         app = application as MainApp
-        user = app.user
+        user = app.currentUser
 
+        // Hide Data Picker till Visted box is ticked
         dateVisited.visibility = View.INVISIBLE
 
         if (intent.hasExtra("placemark_edit")) {
             edit = true
+            toast("!! WARNING YOU ARE NOW IN EDIT MODE !!")
 
             placemark = intent.extras?.getParcelable<PlacemarkModel>("placemark_edit")!!
 
@@ -60,11 +62,19 @@ class PlacemarkActivity : AppCompatActivity(), AnkoLogger {
             val imgAdp = ImageAdapter(placemark.image_list, this)
             placemarkImage.adapter = imgAdp
 
-            val newLng = "%.6f".format(placemark.location.lng)
-            val newLat = "%.6f".format(placemark.location.lat)
+            checkBox.isChecked = placemark.check_box
 
-            lng.text = "Lng:    ${newLng}"
-            lat.text = "Lat:    ${newLat}"
+            val dateFormat = SimpleDateFormat("dd-mm-yyyy")
+            val dateSelected = dateFormat.format(dateVisited.date)
+            date = dateSelected
+
+            if (placemark.location.lng != -7.139102 && placemark.location.lat != 52.245696) {
+                val newLng = "%.6f".format(placemark.location.lng.toString())
+                val newLat = "%.6f".format(placemark.location.lat.toString())
+
+                lng.text = "Lng:  ${newLng}"
+                lat.text = "Lat:  ${newLat}"
+            }
         }
 
         chooseImage.setOnClickListener {
@@ -78,11 +88,20 @@ class PlacemarkActivity : AppCompatActivity(), AnkoLogger {
         checkBox.setOnClickListener {
             if(checkBox.isChecked) {
                 dateVisited.visibility = View.VISIBLE
+                placemark.check_box = true
             } else {
                 dateVisited.visibility = View.INVISIBLE
+                placemark.check_box = false
             }
         }
+
+        dateVisited.setOnDateChangeListener(CalendarView.OnDateChangeListener(){
+                v, y, m, d -> date = "${d}-${m}-${y}"
+            dateText.text = date
+        })
+
     }
+
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         menuInflater.inflate(R.menu.menu_placemark, menu)
@@ -96,26 +115,29 @@ class PlacemarkActivity : AppCompatActivity(), AnkoLogger {
             R.id.btnAdd -> {
                 placemark.title = placemarkTitle.text.toString()
                 placemark.description = description.text.toString()
-                val x = findViewById<CalendarView>(R.id.dateVisited)
 
-                val newLat = "%.6f".format(placemark.location.lat)
-                val newLng = "%.6f".format(placemark.location.lng)
+                if (location.lat != 52.245696 && location.lng != -7.139102) {
+                    placemark.location = location
+                }
 
-                lat.setText(newLat.toString())
-                lng.setText(newLng.toString())
+//                lat.setText("%.6f".format(placemark.location.lat).toString())
+//                lng.setText("%.6f".format(placemark.location.lng).toString())
+
+                placemark.check_box = checkBox.isChecked
+                placemark.dateVisited = date
 
                 if (placemark.title.isEmpty()) {
                     toast(R.string.enter_placemark_title)
-                    toast(x.date.toString())
                 } else {
                     if (edit) {
-                        app.placemarks.update(user, placemark.copy())
+                        app.users.update(user, placemark.copy())
                     } else {
-                        app.placemarks.create(user, placemark.copy())
+                        app.users.create(user, placemark.copy())
                     }
+
+                    setResult(RESULT_OK)
+                    finish()
                 }
-                setResult(AppCompatActivity.RESULT_OK)
-                finish()
             }
         }
         return super.onOptionsItemSelected(item!!)
@@ -133,8 +155,8 @@ class PlacemarkActivity : AppCompatActivity(), AnkoLogger {
             LOCATION_REQUEST -> {
                 if (data != null) {
                     location = data.extras?.getParcelable<Location>("location")!!
-                    lat.setText(location.lat.toString())
-                    lng.setText(location.lng.toString())
+                    lat.text = "%.6f".format(location.lat.toString())
+                    lng.text = "%.6f".format(location.lng.toString())
                 }
             }
         }

@@ -8,6 +8,7 @@ import org.jetbrains.anko.AnkoLogger
 import org.wit.placemark.helpers.*
 import java.util.*
 
+
 val JSON_FILE = "test.json"
 val gsonBuilder = GsonBuilder().setPrettyPrinting().create()
 val listType = object : TypeToken<java.util.ArrayList<PlacemarkModel>>() {}.type
@@ -16,7 +17,7 @@ fun generateRandomId(): Long {
     return Random().nextLong()
 }
 
-class PlacemarkJSONStore : Store, AnkoLogger {
+class PlacemarkJSONStore : UserStore, AnkoLogger {
 
     val context: Context
     var users = mutableListOf<UserModel>()
@@ -53,6 +54,8 @@ class PlacemarkJSONStore : Store, AnkoLogger {
             user.id = generateRandomId()
             users.add(user)
             serialize()
+        } else {
+            println("User already exists")
         }
     }
 
@@ -101,7 +104,7 @@ class PlacemarkJSONStore : Store, AnkoLogger {
         }
 
         if (foundUser != null) {
-            // iterate through the List of placemarks in User Model
+            // iterate through the List of users in User Model
             for(x in foundUser.placemark) {
                 if(x.id.equals(placemark.id)) {
                     x.title = placemark.title

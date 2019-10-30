@@ -1,5 +1,6 @@
 package org.wit.placemark.Auth
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import kotlinx.android.synthetic.main.login_page.*
@@ -31,15 +32,15 @@ class LoginActivity : AppCompatActivity() {
             } else {
                 // check if Email format is valid before login
                 if (isEmailValid(email)) {
-                    val user = app.placemarks.findUserByEmail(email)
+                    val user = app.users.findUserByEmail(email)
 
                         if (user != null && user.password == password) {
                             toast("LOGGING IN ......")
 
-                            // We set the user to be the user who logged in
-                            app.user = user
+                            // We set the currentUser to be the currentUser who logged in
+                            app.currentUser = user
 
-                            startActivity(intentFor<PlacemarkActivity>())
+                            startActivity(Intent(this, PlacemarkActivity::class.java))
                             finish()
 
                         } else {

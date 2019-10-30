@@ -27,8 +27,8 @@
     <string name="visited">Hillfort Visited</string>
 
     // Lat and Lng //
-    <string name="hint_lat">Lat:    00.000000 </string>
-    <string name="hint_lng">Lng:    00.000000 </string>
+    <string name="hint_lat">Lat:    00.000 </string>
+    <string name="hint_lng">Lng:    00.000 </string>
 
     // Authentication //
     <string name="name">Name</string>

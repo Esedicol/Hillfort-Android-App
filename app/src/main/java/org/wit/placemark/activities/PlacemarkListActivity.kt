@@ -58,12 +58,12 @@ class PlacemarkListActivity : AppCompatActivity(), PlacemarkListener {
 
 
     override fun del(user : UserModel, placemark: PlacemarkModel) {
-        app.placemarks.delete(app.user, placemark)
+        app.users.delete(app.currentUser, placemark)
         loadPlacemarks()
     }
 
     private fun loadPlacemarks() {
-        showPlacemarks(app.user.placemark)
+        showPlacemarks(app.currentUser.placemark)
     }
 
     fun showPlacemarks (placemarks: List<PlacemarkModel>) {

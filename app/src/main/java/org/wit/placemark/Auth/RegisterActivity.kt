@@ -1,5 +1,6 @@
 package org.wit.placemark.Auth
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import kotlinx.android.synthetic.main.register_page.*
@@ -40,10 +41,10 @@ class RegisterActivity : AppCompatActivity() {
                             user.email = email
                             user.password = password
 
-                            app.placemarks.createUser(user)
+                            app.users.createUser(user)
 
-                            toast("New user created: ${user.name}")
-                            startActivity(intentFor<LoginActivity>())
+                            toast("New currentUser created: ${user.name}")
+                        startActivity(Intent(this, LoginActivity::class.java))
                             finish()
 
                     } else {
