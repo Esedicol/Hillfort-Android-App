@@ -110,7 +110,7 @@ class PlacemarkActivity : AppCompatActivity(), AnkoLogger {
                 newNote.title = noteTitle
                 newNote.content = noteContent
 
-                placemark.note
+                app.users.createNote(app.currentUser, placemark, newNote)
             } else {
 
             }
@@ -198,6 +198,16 @@ class PlacemarkActivity : AppCompatActivity(), AnkoLogger {
 
     fun generateRandomId(): Long {
         return Random().nextLong()
+    }
+
+    private fun loadNotes() {
+        val note = app.currentUser.placemarks[placemark.id].note
+        showNotes(note)
+    }
+
+    private fun showNotes(notes: ArrayList<Note>) {
+        recyclerNotes.adapter = NotesAdapter(notes, this)
+        recyclerNotes.adapter?.notifyDataSetChanged()
     }
 }
 
