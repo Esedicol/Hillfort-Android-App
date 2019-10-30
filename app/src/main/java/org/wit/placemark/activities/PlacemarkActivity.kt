@@ -20,14 +20,19 @@ import org.wit.placemark.helpers.showImagePicker
 import org.wit.placemark.main.MainApp
 import org.wit.placemark.models.Location
 import org.wit.placemark.models.PlacemarkModel
+import org.wit.placemark.models.UserModel
 
 class PlacemarkActivity : AppCompatActivity(), AnkoLogger {
 
-    var placemark = PlacemarkModel()
     lateinit var app: MainApp
+    var user  = UserModel()
+    var placemark = PlacemarkModel()
+
     val IMAGE_REQUEST = 1
     val LOCATION_REQUEST = 2
+
     var location = Location(52.245696, -7.139102, 15f)
+
     var edit = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -38,9 +43,11 @@ class PlacemarkActivity : AppCompatActivity(), AnkoLogger {
         setSupportActionBar(toolbarAdd)
 
         app = application as MainApp
+        user = app.user
 
         if (intent.hasExtra("placemark_edit")) {
             edit = true
+
             placemark = intent.extras?.getParcelable<PlacemarkModel>("placemark_edit")!!
 
             placemarkTitle.setText(placemark.title)
@@ -67,23 +74,26 @@ class PlacemarkActivity : AppCompatActivity(), AnkoLogger {
             R.id.item_cancel -> finish()
             R.id.logout -> toast("Loggin out")
             R.id.btnAdd -> {
-                placemark.title = placemarkTitle.text.toString()
-                placemark.description = description.text.toString()
 
-                if (placemark.title.isEmpty()) {
-                    toast(R.string.enter_placemark_title)
-                } else {
-                    if (edit) {
-                        app.placemarks.update(placemark.copy())
-                    } else {
-                        app.placemarks.create(placemark.copy())
-                    }
-                }
-                setResult(AppCompatActivity.RESULT_OK)
-                finish()
             }
+//            R.id.btnAdd -> {
+//                placemark.title = placemarkTitle.text.toString()
+//                placemark.description = description.text.toString()
+//
+//                if (placemark.title.isEmpty()) {
+//                    toast(R.string.enter_placemark_title)
+//                } else {
+//                    if (edit) {
+//                        app.placemarks.update(placemark.copy())
+//                    } else {
+//                        app.placemarks.create(placemark.copy())
+//                    }
+//                }
+//                setResult(AppCompatActivity.RESULT_OK)
+//                finish()
+//            }
         }
-        return super.onOptionsItemSelected(item)
+        return super.onOptionsItemSelected(item!!)
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {

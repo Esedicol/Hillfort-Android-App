@@ -8,7 +8,7 @@ import org.jetbrains.anko.AnkoLogger
 import org.wit.placemark.helpers.*
 import java.util.*
 
-val JSON_FILE = "placemarks.json"
+val JSON_FILE = "test.json"
 val gsonBuilder = GsonBuilder().setPrettyPrinting().create()
 val listType = object : TypeToken<ArrayList<PlacemarkModel>>() {}.type
 

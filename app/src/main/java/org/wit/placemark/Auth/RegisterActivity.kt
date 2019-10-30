@@ -15,7 +15,6 @@ import org.wit.placemark.models.UserModel
 class RegisterActivity : AppCompatActivity() {
 
     lateinit var app : MainApp
-    lateinit var user : UserModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -24,18 +23,29 @@ class RegisterActivity : AppCompatActivity() {
         app = application as MainApp
 
         regButton.setOnClickListener {
-            toast("Register Button Pressed")
 
-            user.name = regName.text.toString()
-            user.email = regEmail.text.toString()
-            user.password = regPassword.text.toString()
+            val name = regName.text.toString()
+            val email = regEmail.text.toString()
+            val password = regPassword.text.toString()
+
 
             // 1) Check if user exist using (findByEmail) function
-            val emailExists = app.placemarks.findByEmail(user.email)
+            val result = app.placemarks.findByEmail(email)
 
-            if(emailExists == null) {
-                if(user.name.isNotEmpty() && user.email.isNotEmpty() && user.password.isNotEmpty()) {
+            if(result == null) {
+                if(name.isNotEmpty() && email.isNotEmpty() && password.isNotEmpty()) {
+                    val user = UserModel()
 
+                    user.name = name
+                    user.email = email
+                    user.password = password
+
+                    app.placemarks.createUser(user)
+                    toast(user.name)
+                    startActivity(intentFor<LoginActivity>())
+                    finish()
+                } else {
+                    toast("!! ERROR EMPTY INPUTS !!")
                 }
             }
             // 2) add user

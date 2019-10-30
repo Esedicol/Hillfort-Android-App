@@ -8,6 +8,7 @@ import org.jetbrains.anko.intentFor
 import org.jetbrains.anko.toast
 import org.wit.placemark.R
 import org.wit.placemark.activities.InitialActivity
+import org.wit.placemark.activities.PlacemarkActivity
 import org.wit.placemark.main.MainApp
 
 class LoginActivity : AppCompatActivity() {
@@ -19,7 +20,26 @@ class LoginActivity : AppCompatActivity() {
         setContentView(R.layout.login_page)
 
         loginButton.setOnClickListener {
-            toast("Login Button Pressed")
+            val users = app.placemarks.findAllUsers()
+
+            val email = loginEmail.text.toString()
+            val password = loginPassword.text.toString()
+
+            if(email.isEmpty() || password.isEmpty()) {
+                toast(" !! ERROR EMPTY INPUTS !!")
+            } else {
+                for(x in users) {
+                    if(x.email == email  && x.password == password) {
+
+                        app.user = app.placemarks.findUser(x.id)!!
+                        toast("SUCCESS")
+                        startActivity(intentFor<PlacemarkActivity>())
+                        finish()
+                    } else {
+                        toast("!! ERROR INVALID INPUTS !!")
+                    }
+                }
+            }
         }
 
         back.setOnClickListener {

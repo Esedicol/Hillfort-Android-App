@@ -14,6 +14,7 @@ import org.wit.placemark.adapters.PlacemarkAdapter
 import org.wit.placemark.adapters.PlacemarkListener
 import org.wit.placemark.main.MainApp
 import org.wit.placemark.models.PlacemarkModel
+import org.wit.placemark.models.UserModel
 
 class PlacemarkListActivity : AppCompatActivity(), PlacemarkListener {
 
@@ -22,7 +23,9 @@ class PlacemarkListActivity : AppCompatActivity(), PlacemarkListener {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_placemark_list)
+
         app = application as MainApp
+
         toolbar.title = title
         setSupportActionBar(toolbar)
 
@@ -60,7 +63,7 @@ class PlacemarkListActivity : AppCompatActivity(), PlacemarkListener {
     }
 
     private fun loadPlacemarks() {
-        showPlacemarks(app.placemarks.findAll())
+        showPlacemarks(app.user.placemark)
     }
 
     fun showPlacemarks (placemarks: List<PlacemarkModel>) {
