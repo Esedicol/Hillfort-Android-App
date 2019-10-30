@@ -35,7 +35,7 @@
         <activity android:name=".activities.MapActivity" android:label="@string/title_activity_map"></activity>
         <activity android:name=".activities.PlacemarkActivity"></activity>
         <activity android:name=".activities.PlacemarkListActivity"></activity>
-        <activity android:name=".activities.InitialActivity"></activity>
+        <activity android:name=".Auth.InitialActivity"></activity>
         <activity android:name=".Auth.LoginActivity"></activity>
         <activity android:name=".Auth.RegisterActivity"></activity>
     </application>

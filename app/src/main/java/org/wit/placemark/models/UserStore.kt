@@ -2,11 +2,12 @@ package org.wit.placemark.models
 
 interface UserStore {
 
-    // Each variable will be assigned to a certain currentUser, so we will need to pass in the currentUser as a parameter for each function
-    fun findAll(user : UserModel): List<PlacemarkModel>
-    fun create(user : UserModel, placemark: PlacemarkModel)
-    fun update(user : UserModel, placemark: PlacemarkModel)
-    fun delete(user : UserModel, placemark: PlacemarkModel)
+    // Hill Forts Function //
+    fun findAll() : ArrayList<PlacemarkModel>
+    fun findAllForts(user : UserModel): List<PlacemarkModel>
+    fun createFort(user : UserModel, placemark: PlacemarkModel)
+    fun updateFort(user : UserModel, placemark: PlacemarkModel)
+    fun deleteFort(user : UserModel, placemark: PlacemarkModel)
 
     // Functions for users //
     fun findAllUsers() : ArrayList<UserModel>

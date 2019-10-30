@@ -1,43 +1,59 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.cardview.widget.CardView
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_marginBottom="8dp"
     android:elevation="24dp">
 
 
-
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="fill_parent"
-        android:padding="16dp" >
+        android:padding="16dp">
 
         <ImageView
             android:id="@+id/imageIcon"
-            android:layout_width="64dp"
-            android:layout_height="64dp"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
             android:layout_alignParentLeft="true"
             android:layout_alignParentTop="true"
-            android:layout_marginRight="16dp"/>
+            android:layout_marginEnd="20dp"
+            android:layout_marginRight="16dp" />
 
         <TextView
-            android:id="@+id/placemarkTitle"
+            android:id="@+id/cardTitle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentTop="true"
             android:layout_toRightOf="@+id/imageIcon"
-            android:textSize="30sp"
             android:textColor="#cc0000"
-            android:textStyle="bold"/>
+            android:textSize="26sp"
+            android:textStyle="bold" />
 
         <TextView
-            android:id="@+id/description"
+            android:id="@+id/cardDescription"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@id/placemarkTitle"
-            android:layout_toRightOf="@+id/imageIcon"/>
+            android:layout_below="@id/cardTitle"
+            android:layout_toRightOf="@+id/imageIcon"
+            android:textSize="18sp" />
+
+
+        <TextView
+            android:id="@+id/cardCheck"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/cardDescription"
+            android:layout_toRightOf="@+id/imageIcon"
+            android:textSize="18sp"/>
+
+        <TextView
+            android:id="@+id/cardLocation"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/cardCheck"
+            android:layout_toRightOf="@+id/imageIcon"
+            android:textSize="18sp"/>
 
         <Button
             android:id="@+id/delete_placemark"
@@ -45,14 +61,11 @@
             android:layout_height="40dp"
             android:layout_alignParentTop="true"
             android:layout_alignParentRight="true"
-            android:layout_marginTop="8dp"
+            android:layout_marginTop="35dp"
             android:layout_marginRight="20dp"
             android:background="@color/colorAccent"
-            android:padding="4dp"
-            android:stateListAnimator="@null"
             android:text="@string/button_delete"
-            android:textColor="@color/colorPrimary"
-            android:textSize="14sp" />
+            android:textColor="@color/colorPrimary" />
 
 
     </RelativeLayout>

@@ -8,14 +8,16 @@ import kotlinx.android.synthetic.main.register_page.back
 import org.jetbrains.anko.intentFor
 import org.jetbrains.anko.toast
 import org.wit.placemark.R
-import org.wit.placemark.activities.InitialActivity
-import org.wit.placemark.activities.PlacemarkActivity
+import org.wit.placemark.activities.PlacemarkListActivity
 import org.wit.placemark.main.MainApp
+import org.wit.placemark.models.UserModel
+import java.lang.Exception
 
 class LoginActivity : AppCompatActivity() {
 
-    val emailRegex = "^[A-Za-z](.*)([@]{1})(.{1,})(\\.)(.{1,})";
-    lateinit var app : MainApp
+    lateinit var app: MainApp
+
+    val emailRegex = "^[A-Za-z](.*)([@]{1})(.{1,})(\\.)(.{1,})"
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -24,15 +26,16 @@ class LoginActivity : AppCompatActivity() {
         app = application as MainApp
 
         loginButton.setOnClickListener {
-            val email = loginEmail.text.toString()
-            val password = loginPassword.text.toString()
+            val email = loginEmail!!.text.toString()
+            val password = loginPassword!!.text.toString()
 
             if (email == "" || password == "") {
                 toast(" !! ERROR EMPTY INPUTS !!")
             } else {
-                // check if Email format is valid before login
                 if (isEmailValid(email)) {
-                    val user = app.users.findUserByEmail(email)
+
+                    try {
+                        val user: UserModel? = app.users.findUserByEmail(email)
 
                         if (user != null && user.password == password) {
                             toast("LOGGING IN ......")
@@ -40,12 +43,13 @@ class LoginActivity : AppCompatActivity() {
                             // We set the currentUser to be the currentUser who logged in
                             app.currentUser = user
 
-                            startActivity(Intent(this, PlacemarkActivity::class.java))
-                            finish()
-
+                            startActivity(Intent(this@LoginActivity, PlacemarkListActivity::class.java))
                         } else {
-                            toast("!! ERROR INVALID INPUTS !!")
+                            toast("!! ERROR USER NOT FOUND !!")
                         }
+                    } catch (e: Exception) {
+                        toast("!! ERROR LOGING IN !!")
+                    }
                 } else {
                     toast("Invalid email format !!")
                 }
@@ -58,7 +62,7 @@ class LoginActivity : AppCompatActivity() {
         }
     }
 
-        fun isEmailValid(email: String): Boolean {
-            return emailRegex.toRegex().matches(email);
-        }
+    fun isEmailValid(email: String): Boolean {
+        return emailRegex.toRegex().matches(email);
+    }
 }

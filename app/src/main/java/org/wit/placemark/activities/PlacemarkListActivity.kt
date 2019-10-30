@@ -9,6 +9,7 @@ import kotlinx.android.synthetic.main.activity_placemark_list.*
 import org.jetbrains.anko.intentFor
 import org.jetbrains.anko.startActivityForResult
 import org.jetbrains.anko.toast
+import org.wit.placemark.Auth.LoginActivity
 import org.wit.placemark.R
 import org.wit.placemark.adapters.PlacemarkAdapter
 import org.wit.placemark.adapters.PlacemarkListener
@@ -31,6 +32,7 @@ class PlacemarkListActivity : AppCompatActivity(), PlacemarkListener {
 
         val layoutManager = LinearLayoutManager(this)
         recyclerView.layoutManager = layoutManager
+        recyclerView.adapter = PlacemarkAdapter(app.currentUser.placemarks, this)
         loadPlacemarks()
     }
 
@@ -39,16 +41,11 @@ class PlacemarkListActivity : AppCompatActivity(), PlacemarkListener {
         return super.onCreateOptionsMenu(menu)
     }
 
-    override fun onOptionsItemSelected(item: MenuItem?): Boolean {
-        when (item?.itemId) {
-            R.id.item_add -> startActivityForResult<PlacemarkActivity>(0)
-            R.id.logout -> toast("Logging Out")
-        }
-        return super.onOptionsItemSelected(item)
-    }
-
     override fun onPlacemarkClick(placemark: PlacemarkModel) {
-        startActivityForResult(intentFor<PlacemarkActivity>().putExtra("placemark_edit", placemark), 0)
+        startActivityForResult(
+            intentFor<PlacemarkActivity>().putExtra("placemark_edit", placemark),
+            0
+        )
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
@@ -56,18 +53,36 @@ class PlacemarkListActivity : AppCompatActivity(), PlacemarkListener {
         super.onActivityResult(requestCode, resultCode, data)
     }
 
-
-    override fun del(user : UserModel, placemark: PlacemarkModel) {
-        app.users.delete(app.currentUser, placemark)
-        loadPlacemarks()
+    override fun onOptionsItemSelected(item: MenuItem?): Boolean {
+        when (item?.itemId) {
+            R.id.item_add -> startActivityForResult<PlacemarkActivity>(0)
+            R.id.logout -> {
+                toast("Logged Out")
+                logout()
+            }
+        }
+        return super.onOptionsItemSelected(item)
     }
 
     private fun loadPlacemarks() {
-        showPlacemarks(app.currentUser.placemark)
+        showPlacemarks(app.currentUser.placemarks)
     }
 
-    fun showPlacemarks (placemarks: List<PlacemarkModel>) {
+    fun showPlacemarks(placemarks: List<PlacemarkModel>) {
         recyclerView.adapter = PlacemarkAdapter(placemarks, this)
         recyclerView.adapter?.notifyDataSetChanged()
+    }
+
+    override fun del(placemark: PlacemarkModel) {
+        app.users.deleteFort(app.currentUser, placemark)
+        loadPlacemarks()
+        toast("YAY! Fort Successfully Deleted")
+    }
+
+    private fun logout() {
+        val intent = Intent(this, LoginActivity::class.java)
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_NEW_TASK)
+        startActivity(intent)
+        finish() // finish the current activity
     }
 }

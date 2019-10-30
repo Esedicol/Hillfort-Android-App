@@ -5,17 +5,20 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import kotlinx.android.synthetic.main.card_placemark.view.*
+import kotlinx.android.synthetic.main.main_layout.view.*
 import org.wit.placemark.R
+import org.wit.placemark.helpers.readImageFromPath
 import org.wit.placemark.models.PlacemarkModel
 import org.wit.placemark.models.UserModel
 
 interface PlacemarkListener {
     fun onPlacemarkClick(placemark: PlacemarkModel)
-    fun del(user : UserModel, placemark: PlacemarkModel)
+    fun del(placemark: PlacemarkModel)
 }
 
-class PlacemarkAdapter constructor(private var placemarks: List<PlacemarkModel>,
-                                   private val listener: PlacemarkListener
+class PlacemarkAdapter constructor(
+    private var placemarks: List<PlacemarkModel>,
+    private val listener: PlacemarkListener
 ) : RecyclerView.Adapter<PlacemarkAdapter.MainHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MainHolder {
@@ -38,10 +41,19 @@ class PlacemarkAdapter constructor(private var placemarks: List<PlacemarkModel>,
     class MainHolder constructor(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
         fun bind(placemark: PlacemarkModel, listener: PlacemarkListener) {
-            itemView.placemarkTitle.text = placemark.title
-            itemView.description.text = placemark.description
+            itemView.cardTitle.text = placemark.title
+            itemView.cardDescription.text = placemark.description
+            itemView.cardCheck.text = "Visited: ${placemark.check_box}"
+            itemView.cardLocation.text = "Lat: ${placemark.location.lat} - Lng: ${placemark.location.lng}"
+
             itemView.setOnClickListener { listener.onPlacemarkClick(placemark) }
-//            itemView.delete_placemark.setOnClickListener{listener.del(placemark)}
+            itemView.delete_placemark.setOnClickListener { listener.del(placemark) }
+
+            if (placemark.image_list.size == 0) {
+                itemView.imageIcon.setImageResource(R.drawable.default_image)
+            } else {
+                itemView.imageIcon.setImageBitmap(readImageFromPath(itemView.context, placemark.image_list[0]))
+            }
         }
     }
 }

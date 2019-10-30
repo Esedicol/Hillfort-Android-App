@@ -8,14 +8,16 @@ import kotlinx.android.synthetic.main.register_page.back
 import org.jetbrains.anko.intentFor
 import org.jetbrains.anko.toast
 import org.wit.placemark.R
-import org.wit.placemark.activities.InitialActivity
 import org.wit.placemark.main.MainApp
 import org.wit.placemark.models.UserModel
 
 class RegisterActivity : AppCompatActivity() {
 
-    val emailRegex = "^[A-Za-z](.*)([@]{1})(.{1,})(\\.)(.{1,})";
-    lateinit var app : MainApp
+
+    lateinit var app: MainApp
+    private var user = UserModel()
+
+    val emailRegex = "^[A-Za-z](.*)([@]{1})(.{1,})(\\.)(.{1,})"
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -27,31 +29,27 @@ class RegisterActivity : AppCompatActivity() {
         // When Register Button is Pressed //
         regButton.setOnClickListener {
 
-            val name = regName.text.toString()
-            val email = regEmail.text.toString()
-            val password = regPassword.text.toString()
+            val name = regName?.text.toString()
+            val email = regEmail?.text.toString()
+            val password = regPassword?.text.toString()
 
-                if (name == "" && email == "" && password == "") {
-                    toast("!! ERROR EMPTY INPUTS !!")
+            if (name == "" && email == "" && password == "") {
+                toast("!! ERROR EMPTY INPUTS !!")
+            } else {
+                if (isEmailValid(email)) {
+                    user.name = name
+                    user.email = email
+                    user.password = password
+
+                    app.users.createUser(user.copy())
+                    toast("New User created: ${user.name}")
+
+                    startActivity(Intent(this@RegisterActivity, LoginActivity::class.java))
                 } else {
-                    if (isEmailValid(email)) {
-                            val user = UserModel()
-
-                            user.name = name
-                            user.email = email
-                            user.password = password
-
-                            app.users.createUser(user)
-
-                            toast("New currentUser created: ${user.name}")
-                        startActivity(Intent(this, LoginActivity::class.java))
-                            finish()
-
-                    } else {
-                        toast("!! Invalid Email Format !!")
-                    }
+                    toast("!! Invalid Email Format !!")
                 }
             }
+        }
 
 
         // When Back Button is Pressed //

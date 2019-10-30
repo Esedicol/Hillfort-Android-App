@@ -1,4 +1,4 @@
-package org.wit.placemark.activities
+package org.wit.placemark.Auth
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity

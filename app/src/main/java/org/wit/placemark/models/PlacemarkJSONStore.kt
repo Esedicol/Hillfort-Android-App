@@ -7,11 +7,12 @@ import com.google.gson.reflect.TypeToken
 import org.jetbrains.anko.AnkoLogger
 import org.wit.placemark.helpers.*
 import java.util.*
+import kotlin.collections.ArrayList
 
 
-val JSON_FILE = "test.json"
+val JSON_FILE = "esedicol.json"
 val gsonBuilder = GsonBuilder().setPrettyPrinting().create()
-val listType = object : TypeToken<java.util.ArrayList<PlacemarkModel>>() {}.type
+val listType = object : TypeToken<ArrayList<UserModel>>() {}.type
 
 fun generateRandomId(): Long {
     return Random().nextLong()
@@ -20,7 +21,7 @@ fun generateRandomId(): Long {
 class PlacemarkJSONStore : UserStore, AnkoLogger {
 
     val context: Context
-    var users = mutableListOf<UserModel>()
+    var users = arrayListOf<UserModel>()
 
     constructor (context: Context) {
         this.context = context
@@ -40,90 +41,76 @@ class PlacemarkJSONStore : UserStore, AnkoLogger {
     }
 
 
-    //////////////////////////// USER CRUD ////////////////////////////
-    override fun findAllUsers(): List<UserModel> {
-        return users
-    }
+    // ------------- Override Functions for Hill Forts ------------- //
+    override fun findAll(): ArrayList<PlacemarkModel> {
+        val total : ArrayList<PlacemarkModel> = arrayListOf()
 
-    override fun findUserByEmail(email: String): UserModel? {
-        return users.find { p -> p.email == email }
-    }
-
-    override fun createUser(user: UserModel) {
-        if(findUserByEmail(user.email) == null) {
-            user.id = generateRandomId()
-            users.add(user)
-            serialize()
-        } else {
-            println("User already exists")
-        }
-    }
-
-    override fun updateUser(user: UserModel) {
-        val foundUser: UserModel? = users.find { p ->
-            p.id == user.id
-        }
-
-        if (foundUser != null) {
-            foundUser.id = user.id
-            foundUser.name = user.name
-            foundUser.email = user.email
-            foundUser.password = user.password
-            foundUser.placemark = user.placemark
-        }
-        serialize()
-    }
-
-
-    override fun deleteUser(user: UserModel) {
-        val foundUser: UserModel? = users.find { p ->
-            p.id == user.id
-        }
-
-        if (foundUser != null) {
-            users.remove(foundUser)
-            serialize()
-        }
-    }
-
-
-    //////////////////////////// PLACEMARK CRUD ////////////////////////////
-    override fun findAll(user: UserModel): List<PlacemarkModel> {
-        return user.placemark
-    }
-
-    override fun create(user: UserModel, placemark: PlacemarkModel) {
-        user.id = generateRandomId()
-        user.placemark.add(placemark)
-        serialize()
-    }
-
-    override fun update(user: UserModel, placemark: PlacemarkModel) {
-        val foundUser: UserModel? = users.find {
-                p -> p.id == user.id
-        }
-
-        if (foundUser != null) {
-            // iterate through the List of users in User Model
-            for(x in foundUser.placemark) {
-                if(x.id.equals(placemark.id)) {
-                    x.title = placemark.title
-                    x.description = placemark.description
-                    x.image_list= placemark.image_list
-                    x.location = placemark.location
-                    x.note = placemark.note
-                    x.check_box = placemark.check_box
-                    x.dateVisited = placemark.dateVisited
-                    serialize()
+        for(user in users) {
+            if(user.placemarks.isNotEmpty()) {
+                for(forts in user.placemarks) {
+                    total.add(forts)
                 }
             }
         }
+        return total
     }
 
-    override fun delete(user: UserModel, placemark: PlacemarkModel) {
-        user.placemark.remove(placemark)
+    override fun findAllForts(user: UserModel): List<PlacemarkModel> {
+        return user.placemarks
+    }
+
+    override fun createFort(user: UserModel, placemark: PlacemarkModel) {
+        placemark.id = generateRandomId().toInt()
+        user.placemarks.add(placemark)
         serialize()
     }
 
-}
+    override fun updateFort(user: UserModel, placemark: PlacemarkModel) {
+        val fort : PlacemarkModel? = user.placemarks.find { x -> x.id == placemark.id }
 
+        if(fort != null) {
+            user.placemarks[fort.id] = placemark
+        }
+        serialize()
+    }
+
+    override fun deleteFort(user: UserModel, placemark: PlacemarkModel) {
+        val fort : PlacemarkModel? = user.placemarks.find { x -> x.id == placemark.id }
+
+        user.placemarks.remove(fort)
+        serialize()
+    }
+
+
+    // ------------- Override Function for Users ------------- //
+    override fun findAllUsers(): ArrayList<UserModel> {
+        return users
+    }
+
+    override fun createUser(user: UserModel) {
+        user.id = generateRandomId().toInt()
+        users.add(user)
+        serialize()
+    }
+
+    override fun updateUser(user: UserModel) {
+        val newUser : UserModel? = users.find { x -> x.id == user.id }
+
+        if(newUser != null) {
+            newUser.name = user.name
+            newUser.email = user.email
+            newUser.password = user.password
+            newUser.placemarks = user.placemarks
+        }
+        serialize()
+    }
+
+    override fun deleteUser(user: UserModel) {
+        users.remove(user)
+        serialize()
+    }
+
+    override fun findUserByEmail(email: String): UserModel? {
+        return users.find { x -> x.email == email }
+    }
+}

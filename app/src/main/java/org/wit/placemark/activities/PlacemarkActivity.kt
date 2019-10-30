@@ -1,41 +1,42 @@
 package org.wit.placemark.activities
 
+import android.app.Activity
+import android.app.DatePickerDialog
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
-import android.widget.CalendarView
 import kotlinx.android.synthetic.main.main_layout.*
 import kotlinx.android.synthetic.main.main_layout.description
 import kotlinx.android.synthetic.main.main_layout.placemarkTitle
 import org.jetbrains.anko.AnkoLogger
 import org.jetbrains.anko.intentFor
 import org.jetbrains.anko.toast
+import org.wit.placemark.activities.MapActivity
 import org.wit.placemark.R
-import org.wit.placemark.adapters.ImageAdapter
+import org.wit.placemark.helpers.readImageFromPath
 import org.wit.placemark.helpers.showImagePicker
 import org.wit.placemark.main.MainApp
 import org.wit.placemark.models.Location
 import org.wit.placemark.models.PlacemarkModel
-import org.wit.placemark.models.UserModel
+import java.lang.Exception
 import java.text.SimpleDateFormat
+import java.util.*
 
 class PlacemarkActivity : AppCompatActivity(), AnkoLogger {
 
     lateinit var app: MainApp
-
-    var user  = UserModel()
     var placemark = PlacemarkModel()
-
     val IMAGE_REQUEST = 1
     val LOCATION_REQUEST = 2
-
-    var location = Location(52.245696, -7.139102, 15f)
+    val NOTE_REQUEST = 3
+    var location = Location()
     var date = String()
-
     var edit = false
+    var dateFormat = SimpleDateFormat("dd MMM, YYYY", Locale.UK)
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -45,61 +46,77 @@ class PlacemarkActivity : AppCompatActivity(), AnkoLogger {
         setSupportActionBar(toolbarAdd)
 
         app = application as MainApp
-        user = app.currentUser
+        // user = app.currentUser
 
-        // Hide Data Picker till Visted box is ticked
-        dateVisited.visibility = View.INVISIBLE
 
-        if (intent.hasExtra("placemark_edit")) {
-            edit = true
-            toast("!! WARNING YOU ARE NOW IN EDIT MODE !!")
-
-            placemark = intent.extras?.getParcelable<PlacemarkModel>("placemark_edit")!!
-
-            placemarkTitle.setText(placemark.title)
-            description.setText(placemark.description)
-
-            val imgAdp = ImageAdapter(placemark.image_list, this)
-            placemarkImage.adapter = imgAdp
-
-            checkBox.isChecked = placemark.check_box
-
-            val dateFormat = SimpleDateFormat("dd-mm-yyyy")
-            val dateSelected = dateFormat.format(dateVisited.date)
-            date = dateSelected
-
-            if (placemark.location.lng != -7.139102 && placemark.location.lat != 52.245696) {
-                val newLng = "%.6f".format(placemark.location.lng.toString())
-                val newLat = "%.6f".format(placemark.location.lat.toString())
-
-                lng.text = "Lng:  ${newLng}"
-                lat.text = "Lat:  ${newLat}"
-            }
-        }
-
+        // ------------- Select Image Button  ------------- //
         chooseImage.setOnClickListener {
             showImagePicker(this, IMAGE_REQUEST)
         }
 
+
+        // ------------- Select Location Button  ------------- //
         placemarkLocation.setOnClickListener {
-            startActivityForResult(intentFor<MapActivity>().putExtra("location", location), LOCATION_REQUEST)
+            startActivityForResult(
+                intentFor<MapActivity>().putExtra("location", location),
+                LOCATION_REQUEST
+            )
         }
 
+        // ------------- Check Box  ------------- //
+        setDate.visibility = View.INVISIBLE
+        dateText.visibility = View.INVISIBLE
+
         checkBox.setOnClickListener {
-            if(checkBox.isChecked) {
-                dateVisited.visibility = View.VISIBLE
+            if (checkBox.isChecked) {
+                setDate.visibility = View.VISIBLE
+                dateText.visibility = View.VISIBLE
                 placemark.check_box = true
             } else {
-                dateVisited.visibility = View.INVISIBLE
+                setDate.visibility = View.INVISIBLE
                 placemark.check_box = false
             }
         }
 
-        dateVisited.setOnDateChangeListener(CalendarView.OnDateChangeListener(){
-                v, y, m, d -> date = "${d}-${m}-${y}"
-            dateText.text = date
-        })
+        // ------------- Date Picker Dialog  ------------- //
+        // Tutorial from https://www.youtube.com/watch?v=gollUUFBKQA //
+        setDate.setOnClickListener {
+            val now = Calendar.getInstance()
+            val datePicker = DatePickerDialog(
+                this, DatePickerDialog.OnDateSetListener { view, year, month, dayOfMonth ->
+                    val selectedDate = Calendar.getInstance()
 
+                    selectedDate.set(Calendar.YEAR, year)
+                    selectedDate.set(Calendar.MONTH, month)
+                    selectedDate.set(Calendar.DAY_OF_MONTH, dayOfMonth)
+                    date = dateFormat.format(selectedDate.time)
+
+                    toast(date)
+                    dateText.setText("Date Visited: ${date}")
+                },
+                now.get(Calendar.YEAR), now.get(Calendar.MONTH), now.get(Calendar.DAY_OF_MONTH)
+            )
+            datePicker.show()
+        }
+
+
+        // ------------- Edit Mode ------------- //
+        if (intent.hasExtra("placemark_edit")) {
+            edit = true
+            toast("!! WARNING YOU ARE NOW IN EDIT MODE !!")
+
+            placemark = intent.extras?.getParcelable("placemark_edit")!!
+
+            placemarkTitle.setText(placemark.title)
+            description.setText(placemark.description)
+            location = placemark.location
+            checkBox.isChecked = placemark.check_box
+            dateText.text = placemark.date
+
+            if (placemark.image_list.size == 0) {
+                placemarkImage.setImageResource(R.drawable.default_image)
+            }
+        }
     }
 
 
@@ -110,56 +127,57 @@ class PlacemarkActivity : AppCompatActivity(), AnkoLogger {
 
     override fun onOptionsItemSelected(item: MenuItem?): Boolean {
         when (item?.itemId) {
-            R.id.item_cancel -> finish()
-            R.id.logout -> toast("Loggin out")
+            R.id.item_cancel -> startActivity(
+                Intent(
+                    this@PlacemarkActivity,
+                    PlacemarkListActivity::class.java
+                )
+            )
             R.id.btnAdd -> {
+                toast("ADD")
+
                 placemark.title = placemarkTitle.text.toString()
                 placemark.description = description.text.toString()
-
-                if (location.lat != 52.245696 && location.lng != -7.139102) {
-                    placemark.location = location
-                }
-
-//                lat.setText("%.6f".format(placemark.location.lat).toString())
-//                lng.setText("%.6f".format(placemark.location.lng).toString())
-
                 placemark.check_box = checkBox.isChecked
-                placemark.dateVisited = date
+                placemark.date = date
 
-                if (placemark.title.isEmpty()) {
-                    toast(R.string.enter_placemark_title)
+                if (edit) {
+                    toast("UPDATING ....")
+                    app.users.updateFort(app.currentUser, placemark)
                 } else {
-                    if (edit) {
-                        app.users.update(user, placemark.copy())
-                    } else {
-                        app.users.create(user, placemark.copy())
+                    try {
+                        app.users.createFort(app.currentUser, placemark)
+                        toast("NEW HILLFORT ADDED")
+                    } catch (e: Exception) {
+                        toast("FAILED TO ADD FORT")
                     }
-
-                    setResult(RESULT_OK)
-                    finish()
                 }
+                setResult(Activity.RESULT_OK)
+                finish()
+
+                startActivity(Intent(this@PlacemarkActivity, PlacemarkListActivity::class.java))
             }
         }
         return super.onOptionsItemSelected(item!!)
     }
-
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
-        when (requestCode) {
-            IMAGE_REQUEST -> {
-                if (data != null) {
-                    placemark.image_list += data.data.toString()
-                    placemarkImage.adapter = ImageAdapter(placemark.image_list, this)
-                }
-            }
-            LOCATION_REQUEST -> {
-                if (data != null) {
-                    location = data.extras?.getParcelable<Location>("location")!!
-                    lat.text = "%.6f".format(location.lat.toString())
-                    lng.text = "%.6f".format(location.lng.toString())
-                }
-            }
-        }
-    }
+//
+//    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+//        super.onActivityResult(requestCode, resultCode, data)
+//        when (requestCode) {
+//            IMAGE_REQUEST -> {
+//                if (data != null) {
+//                    placemark.image_list += data.data.toString()
+//                    placemarkImage.adapter = ImageAdapter(placemark.image_list, this)
+//                }
+//            }
+//            LOCATION_REQUEST -> {
+//                if (data != null) {
+//                    location = data.extras?.getParcelable<Location>("location")!!
+//                    lat.text = "%.6f".format(location.lat.toString())
+//                    lng.text = "%.6f".format(location.lng.toString())
+//                }
+//            }
+//        }
+//    }
 }
 

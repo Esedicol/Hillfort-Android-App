@@ -5,10 +5,10 @@ import kotlinx.android.parcel.Parcelize
 
 @Parcelize
 data class PlacemarkModel(
-    var id: Long = 0,
+    var id: Int = 0,
     var title: String = "",
     var description: String = "",
-    var dateVisited: String = "",
+    var date: String = "",
     var location: Location = Location(),
     var note: ArrayList<Note> = ArrayList(),
     var image_list: ArrayList<String> = ArrayList(),

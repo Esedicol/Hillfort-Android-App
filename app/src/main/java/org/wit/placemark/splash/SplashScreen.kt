@@ -5,7 +5,7 @@ import android.os.Bundle
 import android.os.Handler
 import org.jetbrains.anko.intentFor
 import org.wit.placemark.R
-import org.wit.placemark.activities.InitialActivity
+import org.wit.placemark.Auth.InitialActivity
 import org.wit.placemark.main.MainApp
 
 
