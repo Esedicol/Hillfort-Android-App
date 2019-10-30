@@ -19,6 +19,8 @@ class LoginActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.login_page)
 
+        app = application as MainApp
+
         loginButton.setOnClickListener {
             val users = app.placemarks.findAllUsers()
 
@@ -32,7 +34,7 @@ class LoginActivity : AppCompatActivity() {
                     if(x.email == email  && x.password == password) {
 
                         app.user = app.placemarks.findUser(x.id)!!
-                        toast("SUCCESS")
+                        toast("LOGGING IN ......")
                         startActivity(intentFor<PlacemarkActivity>())
                         finish()
                     } else {

@@ -11,7 +11,7 @@ import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.Marker
 import com.google.android.gms.maps.model.MarkerOptions
-import kotlinx.android.synthetic.main.activity_placemark.*
+import kotlinx.android.synthetic.main.main_layout.*
 import org.wit.placemark.R
 import org.wit.placemark.models.Location
 

@@ -5,15 +5,16 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
-import kotlinx.android.synthetic.main.activity_placemark.*
-import kotlinx.android.synthetic.main.activity_placemark.description
-import kotlinx.android.synthetic.main.activity_placemark.placemarkTitle
-import kotlinx.android.synthetic.main.card_placemark.*
+import android.view.View
+import android.widget.CalendarView
+import kotlinx.android.synthetic.main.main_layout.*
+import kotlinx.android.synthetic.main.main_layout.description
+import kotlinx.android.synthetic.main.main_layout.placemarkTitle
 import org.jetbrains.anko.AnkoLogger
-import org.jetbrains.anko.info
 import org.jetbrains.anko.intentFor
 import org.jetbrains.anko.toast
 import org.wit.placemark.R
+import org.wit.placemark.adapters.ImageAdapter
 import org.wit.placemark.helpers.readImage
 import org.wit.placemark.helpers.readImageFromPath
 import org.wit.placemark.helpers.showImagePicker
@@ -25,6 +26,7 @@ import org.wit.placemark.models.UserModel
 class PlacemarkActivity : AppCompatActivity(), AnkoLogger {
 
     lateinit var app: MainApp
+
     var user  = UserModel()
     var placemark = PlacemarkModel()
 
@@ -45,6 +47,8 @@ class PlacemarkActivity : AppCompatActivity(), AnkoLogger {
         app = application as MainApp
         user = app.user
 
+        dateVisited.visibility = View.INVISIBLE
+
         if (intent.hasExtra("placemark_edit")) {
             edit = true
 
@@ -52,7 +56,15 @@ class PlacemarkActivity : AppCompatActivity(), AnkoLogger {
 
             placemarkTitle.setText(placemark.title)
             description.setText(placemark.description)
-            placemarkImage.setImageBitmap(readImageFromPath(this, placemark.image))
+
+            val imgAdp = ImageAdapter(placemark.image_list, this)
+            placemarkImage.adapter = imgAdp
+
+            val newLat = placemark.location.lat
+            val newLng = placemark.location.lng
+
+            lat.setText(newLat.toString())
+            lng.setText(newLng.toString())
         }
 
         chooseImage.setOnClickListener {
@@ -61,6 +73,14 @@ class PlacemarkActivity : AppCompatActivity(), AnkoLogger {
 
         placemarkLocation.setOnClickListener {
             startActivityForResult(intentFor<MapActivity>().putExtra("location", location), LOCATION_REQUEST)
+        }
+
+        checkBox.setOnClickListener {
+            if(checkBox.isChecked) {
+                dateVisited.visibility = View.VISIBLE
+            } else {
+                dateVisited.visibility = View.INVISIBLE
+            }
         }
     }
 
@@ -74,24 +94,29 @@ class PlacemarkActivity : AppCompatActivity(), AnkoLogger {
             R.id.item_cancel -> finish()
             R.id.logout -> toast("Loggin out")
             R.id.btnAdd -> {
+                placemark.title = placemarkTitle.text.toString()
+                placemark.description = description.text.toString()
+                val x = findViewById<CalendarView>(R.id.dateVisited)
 
+                val newLat = placemark.location.lat
+                val newLng = placemark.location.lng
+
+                lat.setText(newLat.toString())
+                lng.setText(newLng.toString())
+
+                if (placemark.title.isEmpty()) {
+                    toast(R.string.enter_placemark_title)
+                    toast(x.date.toString())
+                } else {
+                    if (edit) {
+                        app.placemarks.update(user, placemark.copy())
+                    } else {
+                        app.placemarks.create(user, placemark.copy())
+                    }
+                }
+                setResult(AppCompatActivity.RESULT_OK)
+                finish()
             }
-//            R.id.btnAdd -> {
-//                placemark.title = placemarkTitle.text.toString()
-//                placemark.description = description.text.toString()
-//
-//                if (placemark.title.isEmpty()) {
-//                    toast(R.string.enter_placemark_title)
-//                } else {
-//                    if (edit) {
-//                        app.placemarks.update(placemark.copy())
-//                    } else {
-//                        app.placemarks.create(placemark.copy())
-//                    }
-//                }
-//                setResult(AppCompatActivity.RESULT_OK)
-//                finish()
-//            }
         }
         return super.onOptionsItemSelected(item!!)
     }
@@ -101,14 +126,15 @@ class PlacemarkActivity : AppCompatActivity(), AnkoLogger {
         when (requestCode) {
             IMAGE_REQUEST -> {
                 if (data != null) {
-                    placemark.image = data.getData().toString()
-                    placemarkImage.setImageBitmap(readImage(this, resultCode, data))
-                    chooseImage.setText(R.string.change_placemark_image)
+                    placemark.image_list += data.data.toString()
+                    placemarkImage.adapter = ImageAdapter(placemark.image_list, this)
                 }
             }
             LOCATION_REQUEST -> {
                 if (data != null) {
                     location = data.extras?.getParcelable<Location>("location")!!
+                    lat.setText(location.lat.toString())
+                    lng.setText(location.lng.toString())
                 }
             }
         }

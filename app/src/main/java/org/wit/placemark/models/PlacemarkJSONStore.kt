@@ -119,9 +119,8 @@ class PlacemarkJSONStore : Store, AnkoLogger {
                 if(x.id.equals(placemark.id)) {
                     x.title = placemark.title
                     x.description = placemark.description
-                    x.image = placemark.image
-                    x.lat = placemark.lat
-                    x.lng = placemark.lng
+                    x.image_list= placemark.image_list
+                    x.location = placemark.location
                     x.note = placemark.note
                     x.check_box = placemark.check_box
                     x.dateVisited = placemark.dateVisited
