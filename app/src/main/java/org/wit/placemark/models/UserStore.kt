@@ -17,4 +17,8 @@ interface UserStore {
 
     // Find user by email  //
     fun findUserByEmail(email : String) : UserModel?
+
+    // Note Methods //
+    fun createNote(user: UserModel, placemark: PlacemarkModel, note: Note)
+    fun deleteNote(user : UserModel, placemark: PlacemarkModel, note: Note)
 }

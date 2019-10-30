@@ -14,13 +14,12 @@ import kotlinx.android.synthetic.main.main_layout.placemarkTitle
 import org.jetbrains.anko.AnkoLogger
 import org.jetbrains.anko.intentFor
 import org.jetbrains.anko.toast
-import org.wit.placemark.activities.MapActivity
 import org.wit.placemark.R
-import org.wit.placemark.helpers.readImageFromPath
 import org.wit.placemark.helpers.showImagePicker
 import org.wit.placemark.main.MainApp
 import org.wit.placemark.models.Location
 import org.wit.placemark.models.PlacemarkModel
+import org.wit.placemark.models.Note
 import java.lang.Exception
 import java.text.SimpleDateFormat
 import java.util.*
@@ -99,6 +98,23 @@ class PlacemarkActivity : AppCompatActivity(), AnkoLogger {
             datePicker.show()
         }
 
+        // ------------- Add Note Button ------------- //
+        addNote.setOnClickListener {
+            val noteTitle = noteTitle.text.toString()
+            val noteContent = noteContent.text.toString()
+
+            if(noteTitle.isNotEmpty() && noteContent.isNotEmpty()) {
+                val newNote = Note()
+
+                newNote.id = generateRandomId().toInt()
+                newNote.title = noteTitle
+                newNote.content = noteContent
+
+                placemark.note
+            } else {
+
+            }
+        }
 
         // ------------- Edit Mode ------------- //
         if (intent.hasExtra("placemark_edit")) {
@@ -179,5 +195,9 @@ class PlacemarkActivity : AppCompatActivity(), AnkoLogger {
 //            }
 //        }
 //    }
+
+    fun generateRandomId(): Long {
+        return Random().nextLong()
+    }
 }
 

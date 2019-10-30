@@ -43,11 +43,11 @@ class PlacemarkJSONStore : UserStore, AnkoLogger {
 
     // ------------- Override Functions for Hill Forts ------------- //
     override fun findAll(): ArrayList<PlacemarkModel> {
-        val total : ArrayList<PlacemarkModel> = arrayListOf()
+        val total: ArrayList<PlacemarkModel> = arrayListOf()
 
-        for(user in users) {
-            if(user.placemarks.isNotEmpty()) {
-                for(forts in user.placemarks) {
+        for (user in users) {
+            if (user.placemarks.isNotEmpty()) {
+                for (forts in user.placemarks) {
                     total.add(forts)
                 }
             }
@@ -66,16 +66,16 @@ class PlacemarkJSONStore : UserStore, AnkoLogger {
     }
 
     override fun updateFort(user: UserModel, placemark: PlacemarkModel) {
-        val fort : PlacemarkModel? = user.placemarks.find { x -> x.id == placemark.id }
+        val fort: PlacemarkModel? = user.placemarks.find { x -> x.id == placemark.id }
 
-        if(fort != null) {
+        if (fort != null) {
             user.placemarks[fort.id] = placemark
         }
         serialize()
     }
 
     override fun deleteFort(user: UserModel, placemark: PlacemarkModel) {
-        val fort : PlacemarkModel? = user.placemarks.find { x -> x.id == placemark.id }
+        val fort: PlacemarkModel? = user.placemarks.find { x -> x.id == placemark.id }
 
         user.placemarks.remove(fort)
         serialize()
@@ -94,9 +94,9 @@ class PlacemarkJSONStore : UserStore, AnkoLogger {
     }
 
     override fun updateUser(user: UserModel) {
-        val newUser : UserModel? = users.find { x -> x.id == user.id }
+        val newUser: UserModel? = users.find { x -> x.id == user.id }
 
-        if(newUser != null) {
+        if (newUser != null) {
             newUser.name = user.name
             newUser.email = user.email
             newUser.password = user.password
@@ -112,5 +112,21 @@ class PlacemarkJSONStore : UserStore, AnkoLogger {
 
     override fun findUserByEmail(email: String): UserModel? {
         return users.find { x -> x.email == email }
+    }
+
+    // ------------- Override Functions for Note ------------- //
+    override fun createNote(user: UserModel, placemark: PlacemarkModel, note: Note) {
+        note.id = generateRandomId().toInt()
+        user.placemarks[placemark.id - 1].note.add(note)
+        serialize()
+    }
+
+    override fun deleteNote(user: UserModel, placemark: PlacemarkModel, note: Note) {
+        val p : PlacemarkModel? = user.placemarks.find { x -> x.id == placemark.id }
+        val foundNote : Note? = p!!.note.find { x -> x.id == note.id}
+        val index = user.placemarks[placemark.id - 1].note.indexOf(foundNote)
+
+        user.placemarks[placemark.id -1].note.removeAt(index)
+        serialize()
     }
 }
