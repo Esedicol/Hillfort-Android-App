@@ -11,8 +11,14 @@ class MainApp : Application(), AnkoLogger {
     lateinit var users : UserStore
     lateinit var currentUser : UserModel
 
+    val emailRegex = "^[A-Za-z](.*)([@]{1})(.{1,})(\\.)(.{1,})"
+
     override fun onCreate() {
         super.onCreate()
         users = PlacemarkJSONStore(applicationContext)
+    }
+
+    fun isEmailValid(email: String): Boolean {
+        return emailRegex.toRegex().matches(email);
     }
 }

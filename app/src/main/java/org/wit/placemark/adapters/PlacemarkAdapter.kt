@@ -51,7 +51,12 @@ class PlacemarkAdapter constructor(
             itemView.setOnClickListener { listener.onPlacemarkClick(placemark) }
             itemView.delete_placemark.setOnClickListener { listener.del(placemark) }
 
-            itemView.imageIcon.setImageBitmap(readImageFromPath(itemView.context, placemark.image_list[0]))
+            itemView.imageIcon.setImageBitmap(
+                readImageFromPath(
+                    itemView.context,
+                    placemark.image_list[0]
+                )
+            )
         }
     }
 }

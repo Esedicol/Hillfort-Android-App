@@ -10,6 +10,8 @@ import org.jetbrains.anko.intentFor
 import org.jetbrains.anko.startActivityForResult
 import org.jetbrains.anko.toast
 import org.wit.placemark.Auth.LoginActivity
+import org.wit.placemark.Auth.RegisterActivity
+import org.wit.placemark.Auth.UserSettings
 import org.wit.placemark.R
 import org.wit.placemark.adapters.PlacemarkAdapter
 import org.wit.placemark.adapters.PlacemarkListener
@@ -56,7 +58,9 @@ class PlacemarkListActivity : AppCompatActivity(), PlacemarkListener {
     override fun onOptionsItemSelected(item: MenuItem?): Boolean {
         when (item?.itemId) {
             R.id.item_add -> startActivityForResult<PlacemarkActivity>(0)
-            R.id.logout -> {
+            R.id.item_stats -> startActivity(intentFor<StatsActivity>())
+            R.id.item_settings -> startActivity(intentFor<UserSettings>())
+            R.id.item_logout -> {
                 toast("Logged Out")
                 logout()
             }
@@ -79,10 +83,10 @@ class PlacemarkListActivity : AppCompatActivity(), PlacemarkListener {
         toast("YAY! Fort Successfully Deleted")
     }
 
-    private fun logout() {
+    fun logout() {
         val intent = Intent(this, LoginActivity::class.java)
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_NEW_TASK)
         startActivity(intent)
-        finish() // finish the current activity
+        finish()
     }
 }

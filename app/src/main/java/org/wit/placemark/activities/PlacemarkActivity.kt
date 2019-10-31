@@ -116,6 +116,7 @@ class PlacemarkActivity : AppCompatActivity(), AnkoLogger, NoteListener, ImageLi
         // ------------- New layout manager for images ------------- //
         val imageLayoutManager = LinearLayoutManager(this)
         image_view.layoutManager = imageLayoutManager
+        loadImage()
 
         // ------------- Notes  ------------- //
         val layoutManager = LinearLayoutManager(this)
@@ -148,8 +149,8 @@ class PlacemarkActivity : AppCompatActivity(), AnkoLogger, NoteListener, ImageLi
             description.setText(placemark.description)
             checkBox.isChecked = placemark.check_box
             dateText.text = placemark.date
-            loadNotes()
             loadImage()
+            loadNotes()
 
             location = placemark.location
             val lt: String? = "LAT: ${DecimalFormat("#.##").format(location.lat)}"

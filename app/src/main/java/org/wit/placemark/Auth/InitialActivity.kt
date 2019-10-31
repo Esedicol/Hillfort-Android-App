@@ -9,7 +9,7 @@ import org.wit.placemark.Auth.LoginActivity
 import org.wit.placemark.Auth.RegisterActivity
 import org.wit.placemark.R
 
-class InitialActivity : AppCompatActivity(), AnkoLogger{
+class InitialActivity : AppCompatActivity(), AnkoLogger {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

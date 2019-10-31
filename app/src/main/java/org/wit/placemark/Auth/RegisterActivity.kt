@@ -13,11 +13,8 @@ import org.wit.placemark.models.UserModel
 
 class RegisterActivity : AppCompatActivity() {
 
-
     lateinit var app: MainApp
     private var user = UserModel()
-
-    val emailRegex = "^[A-Za-z](.*)([@]{1})(.{1,})(\\.)(.{1,})"
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -36,7 +33,7 @@ class RegisterActivity : AppCompatActivity() {
             if (name == "" && email == "" && password == "") {
                 toast("!! ERROR EMPTY INPUTS !!")
             } else {
-                if (isEmailValid(email)) {
+                if (app.isEmailValid(email)) {
                     user.name = name
                     user.email = email
                     user.password = password
@@ -51,15 +48,10 @@ class RegisterActivity : AppCompatActivity() {
             }
         }
 
-
         // When Back Button is Pressed //
         back.setOnClickListener {
             startActivity(intentFor<InitialActivity>())
             finish()
         }
-    }
-
-    fun isEmailValid(email: String): Boolean {
-        return emailRegex.toRegex().matches(email);
     }
 }

@@ -14,10 +14,7 @@ import org.wit.placemark.models.UserModel
 import java.lang.Exception
 
 class LoginActivity : AppCompatActivity() {
-
     lateinit var app: MainApp
-
-    val emailRegex = "^[A-Za-z](.*)([@]{1})(.{1,})(\\.)(.{1,})"
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -32,7 +29,7 @@ class LoginActivity : AppCompatActivity() {
             if (email == "" || password == "") {
                 toast(" !! ERROR EMPTY INPUTS !!")
             } else {
-                if (isEmailValid(email)) {
+                if (app.isEmailValid(email)) {
 
                     try {
                         val user: UserModel? = app.users.findUserByEmail(email)
@@ -43,7 +40,12 @@ class LoginActivity : AppCompatActivity() {
                             // We set the currentUser to be the currentUser who logged in
                             app.currentUser = user
 
-                            startActivity(Intent(this@LoginActivity, PlacemarkListActivity::class.java))
+                            startActivity(
+                                Intent(
+                                    this@LoginActivity,
+                                    PlacemarkListActivity::class.java
+                                )
+                            )
                         } else {
                             toast("!! ERROR USER NOT FOUND !!")
                         }
@@ -60,9 +62,5 @@ class LoginActivity : AppCompatActivity() {
                 finish()
             }
         }
-    }
-
-    fun isEmailValid(email: String): Boolean {
-        return emailRegex.toRegex().matches(email);
     }
 }

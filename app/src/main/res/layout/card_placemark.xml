@@ -36,8 +36,8 @@
             android:layout_height="wrap_content"
             android:layout_below="@id/cardTitle"
             android:layout_toRightOf="@+id/imageIcon"
-            android:textSize="20sp"
-            android:textColor="@color/black"/>
+            android:textColor="@color/black"
+            android:textSize="20sp" />
 
         <TextView
             android:id="@+id/cardLocation"
@@ -45,7 +45,7 @@
             android:layout_height="wrap_content"
             android:layout_below="@id/cardCheck"
             android:layout_toRightOf="@+id/imageIcon"
-            android:textSize="14sp"/>
+            android:textSize="14sp" />
 
 
         <TextView
@@ -54,7 +54,7 @@
             android:layout_height="wrap_content"
             android:layout_below="@id/cardDescription"
             android:layout_toRightOf="@+id/imageIcon"
-            android:textSize="14sp"/>
+            android:textSize="14sp" />
 
         <Button
             android:id="@+id/delete_placemark"

@@ -11,13 +11,14 @@ import org.wit.placemark.main.MainApp
 
 class SplashScreen : AppCompatActivity() {
 
-    lateinit var app : MainApp
+    lateinit var app: MainApp
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_splash_screen)
 
-        Handler().postDelayed({ startActivity(intentFor<InitialActivity>())
+        Handler().postDelayed({
+            startActivity(intentFor<InitialActivity>())
             finish()
         }, 3000)
     }
