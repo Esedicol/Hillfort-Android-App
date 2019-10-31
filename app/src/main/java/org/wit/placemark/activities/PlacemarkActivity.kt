@@ -22,8 +22,6 @@ import org.jetbrains.anko.intentFor
 import org.jetbrains.anko.toast
 import org.wit.placemark.R
 import org.wit.placemark.adapters.ImageAdapter
-import org.wit.placemark.helpers.readImage
-import org.wit.placemark.helpers.readImageFromPath
 import org.wit.placemark.helpers.showImagePicker
 import org.wit.placemark.main.MainApp
 import org.wit.placemark.models.Location
@@ -41,14 +39,13 @@ class PlacemarkActivity : AppCompatActivity(), AnkoLogger, NoteListener, ImageLi
 
     lateinit var app: MainApp
     var placemark = PlacemarkModel()
-    val IMAGE_REQUEST = 1
-    val LOCATION_REQUEST = 2
 
-    var location = Location(52.245696, -7.139102, 15f)
-    private lateinit var google_Map: GoogleMap
-    var date = String()
-    var edit = false
-    var dateFormat = SimpleDateFormat("dd MMM, YYYY", Locale.UK)
+    private val IMAGE_REQUEST = 1
+    private val LOCATION_REQUEST = 2
+    private var location = Location(52.245696, -7.139102, 15f)
+    private var date = String()
+    private var edit = false
+    private var dateFormat = SimpleDateFormat("dd MMM, YYYY", Locale.UK)
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -107,7 +104,7 @@ class PlacemarkActivity : AppCompatActivity(), AnkoLogger, NoteListener, ImageLi
                         date = dateFormat.format(selectedDate.time)
 
                         toast(date)
-                        dateText.setText("Date Visited: ${date.toString()}")
+                        dateText.text = "Date Visited: ${date}"
                     },
                     now.get(Calendar.YEAR), now.get(Calendar.MONTH), now.get(Calendar.DAY_OF_MONTH)
                 )
@@ -154,18 +151,18 @@ class PlacemarkActivity : AppCompatActivity(), AnkoLogger, NoteListener, ImageLi
             loadNotes()
             loadImage()
 
-//            placemarkImage.setImageBitmap(readImageFromPath(this, placemark.image))
-
             location = placemark.location
-            lat.setText("LAT: ${DecimalFormat("#.##").format(location.lat)}")
-            lng.setText("LNG: ${DecimalFormat("#.##").format(location.lng)}")
+            val lt: String? = "LAT: ${DecimalFormat("#.##").format(location.lat)}"
+            val lg: String? = "LNG: ${DecimalFormat("#.##").format(location.lng)}"
+
+            lat.text = lt
+            lng.text = lg
 
             val latLng = LatLng(placemark.location.lat, placemark.location.lng)
             map.getMapAsync {
                 setMapLocation(it, latLng)
             }
         }
-
     }
 
 
@@ -231,11 +228,11 @@ class PlacemarkActivity : AppCompatActivity(), AnkoLogger, NoteListener, ImageLi
             LOCATION_REQUEST -> {
                 if (data != null) {
                     location = data.extras?.getParcelable("location")!!
-                    val lt = location.lat
-                    val lg = location.lng
+                    val lt: String? = "LAT: ${DecimalFormat("#.##").format(location.lat)}"
+                    val lg: String? = "LNG: ${DecimalFormat("#.##").format(location.lng)}"
 
-                    lat.setText("LAT: ${DecimalFormat("#.##").format(lt)}")
-                    lng.setText("LNG: ${DecimalFormat("#.##").format(lg)}")
+                    lat.text = lt
+                    lng.text = lg
                 }
             }
         }

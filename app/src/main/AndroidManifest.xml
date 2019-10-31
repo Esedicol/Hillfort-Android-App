@@ -45,6 +45,8 @@
         <activity android:name=".Auth.InitialActivity" />
         <activity android:name=".Auth.LoginActivity" />
         <activity android:name=".Auth.RegisterActivity" />
+        <activity android:name=".Auth.UserSettings" />
+        <activity android:name=".activities.StatsActivity" />
     </application>
 
 </manifest>
