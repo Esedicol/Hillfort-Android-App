@@ -39,6 +39,7 @@ class UserSettings : AppCompatActivity(), AnkoLogger {
             } else {
                 if (old_pass.text.toString() != app.currentUser.password) {
                     toast("Old Password does not match")
+                    reset()
                 } else if(new_email.text.isEmpty()) {
                     newUser.id = app.currentUser.id
                     newUser.name = app.currentUser.name
@@ -46,8 +47,8 @@ class UserSettings : AppCompatActivity(), AnkoLogger {
                     newUser.password = new_pass.text.toString()
 
                     app.users.updateUser(newUser)
-                    reset()
                     toast("Update Complete")
+                    reset()
 
                 } else {
                     newUser.id = app.currentUser.id
@@ -56,8 +57,9 @@ class UserSettings : AppCompatActivity(), AnkoLogger {
                     newUser.password = new_pass.text.toString()
 
                     app.users.updateUser(newUser)
-                    reset()
                     toast("Update Complete")
+                    reset()
+
                 }
             }
         }
