@@ -8,12 +8,12 @@ import kotlinx.android.synthetic.main.card_notes.view.*
 import org.wit.placemark.R
 
 interface NoteListener {
-    fun del(removeIndex: Int)
+    fun delNote(removeIndex: Int)
 }
 
 class NotesAdapter constructor(
-    private var notes: List<String>,
-    private val listener: NoteListener
+    var notes: List<String>,
+    val listener: NoteListener
 ) :
     RecyclerView.Adapter<NotesAdapter.MainHolder>() {
 
@@ -32,14 +32,16 @@ class NotesAdapter constructor(
         holder.bind(notes, position, listener)
     }
 
+
     override fun getItemCount(): Int = notes.size
 
     class MainHolder constructor(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
         fun bind(note: String, position: Int, listener: NoteListener) {
             itemView.note_content.text = note
-            itemView.setOnClickListener{ listener.del(position) }
+            itemView.delete_note.setOnClickListener { listener.delNote(position) }
         }
+
     }
 
 

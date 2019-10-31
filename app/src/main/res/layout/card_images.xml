@@ -9,25 +9,28 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="16dp">
+        android:layout_marginHorizontal="20dp"
+        android:layout_marginVertical="5dp">
 
-        <TextView
-            android:id="@+id/note_content"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+        <ImageView
+            android:id="@+id/cardImage"
+            android:layout_width="100dp"
+            android:layout_height="110dp"
+            android:layout_alignParentStart="true"
             android:layout_alignParentTop="true"
-            android:textSize="20sp" />
+            android:layout_marginStart="0dp"
+            android:layout_marginEnd="100dp"
+            android:layout_toStartOf="@+id/delete_note" />
 
         <Button
-            android:id="@+id/delete_note"
-            android:layout_width="80dp"
-            android:layout_height="40dp"
+            android:id="@+id/delete_image"
+            android:layout_width="150dp"
+            android:layout_height="60dp"
             android:layout_alignParentTop="true"
             android:layout_alignParentRight="true"
-            android:layout_marginTop="10dp"
-            android:layout_marginRight="20dp"
+            android:layout_marginTop="20dp"
             android:background="@color/colorAccent"
-            android:text="@string/button_delete"
+            android:text="DELETE IMAGE"
             android:textColor="@color/colorPrimary" />
 
     </RelativeLayout>

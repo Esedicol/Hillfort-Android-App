@@ -8,9 +8,9 @@ import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
-import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
 import com.google.android.gms.maps.MapsInitializer
@@ -21,6 +21,7 @@ import org.jetbrains.anko.AnkoLogger
 import org.jetbrains.anko.intentFor
 import org.jetbrains.anko.toast
 import org.wit.placemark.R
+import org.wit.placemark.adapters.ImageAdapter
 import org.wit.placemark.helpers.readImage
 import org.wit.placemark.helpers.readImageFromPath
 import org.wit.placemark.helpers.showImagePicker
@@ -32,10 +33,11 @@ import java.text.SimpleDateFormat
 import java.util.*
 import org.wit.placemark.adapters.NotesAdapter
 import org.wit.placemark.adapters.NoteListener
+import org.wit.placemark.adapters.ImageListener
 import java.text.DecimalFormat
 
 
-class PlacemarkActivity : AppCompatActivity(), AnkoLogger, NoteListener {
+class PlacemarkActivity : AppCompatActivity(), AnkoLogger, NoteListener, ImageListener {
 
     lateinit var app: MainApp
     var placemark = PlacemarkModel()
@@ -57,8 +59,6 @@ class PlacemarkActivity : AppCompatActivity(), AnkoLogger, NoteListener {
         setSupportActionBar(toolbarAdd)
 
         app = application as MainApp
-        // user = app.currentUser
-
 
         // ------------- Select Image Button  ------------- //
         chooseImage.setOnClickListener {
@@ -129,14 +129,26 @@ class PlacemarkActivity : AppCompatActivity(), AnkoLogger, NoteListener {
 
 
         // ------------- Notes  ------------- //
+        val layoutManager = LinearLayoutManager(this)
+        note_view.layoutManager = layoutManager
+        note_view.adapter = NotesAdapter(placemark.note, this)
+        loadNotes()
+
         add_note.setOnClickListener {
             if (noteContent.text.toString().isNotEmpty()) {
                 placemark.note += noteContent.text.toString()
                 note_view.adapter = NotesAdapter(placemark.note, this)
+                noteContent.setText("")
             } else {
                 toast("NOTE EMPTY")
             }
         }
+
+        // ------------- Images  ------------- //
+        val imageLayoutManager = LinearLayoutManager(this)
+        image_view.layoutManager = imageLayoutManager
+        image_view.adapter = ImageAdapter(placemark.image_list, this)
+        loadImage()
 
         // ------------- Edit Mode ------------- //
         if (intent.hasExtra("placemark_edit")) {
@@ -149,6 +161,7 @@ class PlacemarkActivity : AppCompatActivity(), AnkoLogger, NoteListener {
             description.setText(placemark.description)
             checkBox.isChecked = placemark.check_box
             dateText.text = placemark.date
+            loadNotes()
 
             if (placemark.image_list.size == 0) {
                 placemarkImage.setImageResource(R.drawable.default_image)
@@ -220,8 +233,14 @@ class PlacemarkActivity : AppCompatActivity(), AnkoLogger, NoteListener {
                 if (data != null) {
                     placemark.image = data.getData().toString()
                     placemarkImage.setImageBitmap(readImage(this, resultCode, data))
+
+                    placemark.image_list += placemark.image_list
+                    image_view.adapter = ImageAdapter(placemark.image_list, this)
+                } else {
+                    toast("ERROR IMAGE")
                 }
             }
+
             LOCATION_REQUEST -> {
                 if (data != null) {
                     location = data.extras?.getParcelable("location")!!
@@ -235,10 +254,44 @@ class PlacemarkActivity : AppCompatActivity(), AnkoLogger, NoteListener {
         }
     }
 
-    override fun del(index: Int) {
+    private fun loadNotes() {
+        val userFort = app.users.findOneFort(app.currentUser, placemark.id)
+        val notes = userFort?.note
+
+        if(notes != null) {
+            showNotes(notes)
+        }
+    }
+
+    private fun loadImage() {
+        val userFort = app.users.findOneFort(app.currentUser, placemark.id)
+        val img = userFort?.image_list
+
+        if(img != null) {
+            showNotes(img)
+        }
+    }
+
+    private fun showNotes(notes: List<String>) {
+        note_view.adapter = NotesAdapter(notes, this)
+        note_view.adapter?.notifyDataSetChanged()
+    }
+
+    private fun showImages(img: List<String>) {
+        image_view.adapter = NotesAdapter(img, this)
+        image_view.adapter?.notifyDataSetChanged()
+    }
+
+    override fun delNote(index: Int) {
         placemark.note = placemark.note.filterIndexed { i, s -> i != index }
         note_view.adapter = NotesAdapter(placemark.note, this)
     }
+
+    override fun delImg(index: Int) {
+        placemark.image_list = placemark.image_list.filterIndexed { i, s -> i != index }
+        image_view.adapter = ImageAdapter(placemark.image_list, this)
+    }
+
 
     // Map methods
     public override fun onResume() {

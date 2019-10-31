@@ -75,12 +75,13 @@ class PlacemarkJSONStore : UserStore, AnkoLogger {
 
         var fort: PlacemarkModel? = user.placemarks.find { p -> p.id == placemark.id }
 
+        // If fort is found //
         if (fort != null) {
-            // If the hillfort it found. update and save
             fort.title = placemark.title
             fort.description = placemark.description
             fort.location.lat = placemark.location.lat.toString().toDouble()
             fort.location.lng = placemark.location.lng.toString().toDouble()
+            fort.note = placemark.note
             fort.check_box = placemark.check_box
             fort.date = placemark.date
             serialize()
