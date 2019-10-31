@@ -82,6 +82,7 @@ class PlacemarkJSONStore : UserStore, AnkoLogger {
             fort.location.lat = placemark.location.lat.toString().toDouble()
             fort.location.lng = placemark.location.lng.toString().toDouble()
             fort.note = placemark.note
+            fort.image_list = placemark.image_list
             fort.check_box = placemark.check_box
             fort.date = placemark.date
             serialize()

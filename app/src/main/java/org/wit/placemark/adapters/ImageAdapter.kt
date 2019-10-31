@@ -5,7 +5,6 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import kotlinx.android.synthetic.main.card_images.view.*
-import kotlinx.android.synthetic.main.card_notes.view.*
 import kotlinx.android.synthetic.main.card_placemark.view.*
 import org.wit.placemark.R
 import org.wit.placemark.helpers.readImageFromPath
@@ -41,7 +40,7 @@ class ImageAdapter constructor(
     class MainHolder constructor(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
         fun bind(imageString: String, position: Int, listener: ImageListener) {
-            itemView.imageIcon.setImageBitmap(readImageFromPath(itemView.context, imageString))
+            itemView.cardImage.setImageBitmap(readImageFromPath(itemView.context, imageString))
             itemView.delete_image.setOnClickListener { listener.delImg(position) }
         }
 

@@ -65,15 +65,7 @@ class PlacemarkActivity : AppCompatActivity(), AnkoLogger, NoteListener, ImageLi
             showImagePicker(this, IMAGE_REQUEST)
         }
 
-
         // ------------- Select Location Button  ------------- //
-        with(map) {
-            onCreate(null)
-            getMapAsync {
-                MapsInitializer.initialize(applicationContext)
-            }
-        }
-
         placemarkLocation.setOnClickListener {
             if (placemark.location.lat == 0.0 && placemark.location.lng == 0.0) {
                 startActivityForResult(
@@ -90,49 +82,50 @@ class PlacemarkActivity : AppCompatActivity(), AnkoLogger, NoteListener, ImageLi
             }
         }
 
-
-        // ------------- Check Box  ------------- //
-        setDate.visibility = View.INVISIBLE
-        dateText.visibility = View.INVISIBLE
-
-        checkBox.setOnClickListener {
-            if (checkBox.isChecked) {
-                setDate.visibility = View.VISIBLE
-                dateText.visibility = View.VISIBLE
-                placemark.check_box = true
-            } else {
-                setDate.visibility = View.INVISIBLE
-                placemark.check_box = false
+        // ------------- Get Map ------------- //
+        with(map) {
+            onCreate(null)
+            getMapAsync {
+                MapsInitializer.initialize(applicationContext)
             }
         }
 
-        // ------------- Date Picker Dialog  ------------- //
+
+        // ------------- Check Box  ------------- //
         // Tutorial from https://www.youtube.com/watch?v=gollUUFBKQA //
-        setDate.setOnClickListener {
-            val now = Calendar.getInstance()
-            val datePicker = DatePickerDialog(
-                this, DatePickerDialog.OnDateSetListener { view, year, month, dayOfMonth ->
-                    val selectedDate = Calendar.getInstance()
+        checkBox.setOnClickListener {
+            if (checkBox.isChecked) {
 
-                    selectedDate.set(Calendar.YEAR, year)
-                    selectedDate.set(Calendar.MONTH, month)
-                    selectedDate.set(Calendar.DAY_OF_MONTH, dayOfMonth)
-                    date = dateFormat.format(selectedDate.time)
+                val now = Calendar.getInstance()
+                val datePicker = DatePickerDialog(
+                    this, DatePickerDialog.OnDateSetListener { view, year, month, dayOfMonth ->
+                        val selectedDate = Calendar.getInstance()
 
-                    toast(date)
-                    dateText.setText("Date Visited: ${date}")
-                },
-                now.get(Calendar.YEAR), now.get(Calendar.MONTH), now.get(Calendar.DAY_OF_MONTH)
-            )
-            datePicker.show()
+                        selectedDate.set(Calendar.YEAR, year)
+                        selectedDate.set(Calendar.MONTH, month)
+                        selectedDate.set(Calendar.DAY_OF_MONTH, dayOfMonth)
+                        date = dateFormat.format(selectedDate.time)
+
+                        toast(date)
+                        dateText.setText("Date Visited: ${date.toString()}")
+                    },
+                    now.get(Calendar.YEAR), now.get(Calendar.MONTH), now.get(Calendar.DAY_OF_MONTH)
+                )
+                datePicker.show()
+            }
         }
 
+
+        // ------------- New layout manager for images ------------- //
+        val imageLayoutManager = LinearLayoutManager(this)
+        image_view.layoutManager = imageLayoutManager
 
         // ------------- Notes  ------------- //
         val layoutManager = LinearLayoutManager(this)
         note_view.layoutManager = layoutManager
         note_view.adapter = NotesAdapter(placemark.note, this)
         loadNotes()
+
 
         add_note.setOnClickListener {
             if (noteContent.text.toString().isNotEmpty()) {
@@ -144,16 +137,13 @@ class PlacemarkActivity : AppCompatActivity(), AnkoLogger, NoteListener, ImageLi
             }
         }
 
-        // ------------- Images  ------------- //
-        val imageLayoutManager = LinearLayoutManager(this)
-        image_view.layoutManager = imageLayoutManager
-        image_view.adapter = ImageAdapter(placemark.image_list, this)
-        loadImage()
-
         // ------------- Edit Mode ------------- //
         if (intent.hasExtra("placemark_edit")) {
             edit = true
             toast("!! WARNING YOU ARE NOW IN EDIT MODE !!")
+
+            dateText.visibility = View.VISIBLE
+            dateText.text = date
 
             placemark = intent.extras?.getParcelable("placemark_edit")!!
 
@@ -162,12 +152,9 @@ class PlacemarkActivity : AppCompatActivity(), AnkoLogger, NoteListener, ImageLi
             checkBox.isChecked = placemark.check_box
             dateText.text = placemark.date
             loadNotes()
+            loadImage()
 
-            if (placemark.image_list.size == 0) {
-                placemarkImage.setImageResource(R.drawable.default_image)
-            } else {
-                placemarkImage.setImageBitmap(readImageFromPath(this, placemark.image))
-            }
+//            placemarkImage.setImageBitmap(readImageFromPath(this, placemark.image))
 
             location = placemark.location
             lat.setText("LAT: ${DecimalFormat("#.##").format(location.lat)}")
@@ -231,11 +218,11 @@ class PlacemarkActivity : AppCompatActivity(), AnkoLogger, NoteListener, ImageLi
         when (requestCode) {
             IMAGE_REQUEST -> {
                 if (data != null) {
-                    placemark.image = data.getData().toString()
-                    placemarkImage.setImageBitmap(readImage(this, resultCode, data))
+                    placemark.image_list += data.data.toString()
 
-                    placemark.image_list += placemark.image_list
                     image_view.adapter = ImageAdapter(placemark.image_list, this)
+                    loadImage()
+
                 } else {
                     toast("ERROR IMAGE")
                 }
@@ -258,7 +245,7 @@ class PlacemarkActivity : AppCompatActivity(), AnkoLogger, NoteListener, ImageLi
         val userFort = app.users.findOneFort(app.currentUser, placemark.id)
         val notes = userFort?.note
 
-        if(notes != null) {
+        if (notes != null) {
             showNotes(notes)
         }
     }
@@ -267,8 +254,8 @@ class PlacemarkActivity : AppCompatActivity(), AnkoLogger, NoteListener, ImageLi
         val userFort = app.users.findOneFort(app.currentUser, placemark.id)
         val img = userFort?.image_list
 
-        if(img != null) {
-            showNotes(img)
+        if (img != null) {
+            showImages(img)
         }
     }
 
@@ -278,7 +265,7 @@ class PlacemarkActivity : AppCompatActivity(), AnkoLogger, NoteListener, ImageLi
     }
 
     private fun showImages(img: List<String>) {
-        image_view.adapter = NotesAdapter(img, this)
+        image_view.adapter = ImageAdapter(img, this)
         image_view.adapter?.notifyDataSetChanged()
     }
 
