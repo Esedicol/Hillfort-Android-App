@@ -93,86 +93,79 @@
 
             </LinearLayout>
 
+            <com.google.android.gms.maps.MapView
+                android:id="@+id/map"
+                android:layout_width="match_parent"
+                android:layout_height="200dp"
+                android:adjustViewBounds="true"
+                android:clickable="false" />
+
             <Button
                 android:id="@+id/placemarkLocation"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginVertical="20dp"
+                android:layout_marginVertical="8dp"
                 android:background="@color/colorAccent"
                 android:text="@string/button_location"
                 android:textColor="@color/colorPrimary"
                 android:textSize="16sp" />
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:layout_marginVertical="10dp"
-            android:orientation="horizontal">
-
-            <CheckBox
-                android:id="@+id/checkBox"
-                android:layout_width="150dp"
-                android:layout_height="50dp"
-                android:text="@string/visited" />
-            <Button
-                android:id="@+id/setDate"
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/note_view"
                 android:layout_width="match_parent"
-                android:layout_height="50dp"
+                android:layout_height="match_parent"
+                android:scrollbars="vertical"/>
+
+            <EditText
+                android:id="@+id/noteContent"
+                android:layout_width="match_parent"
+                android:layout_height="80dp"
+                android:gravity="start"
+                android:hint="Note Content"
+                android:inputType="textMultiLine"
+                android:textColorHint="@color/colorAccent" />
+            <Button
+                android:id="@+id/add_note"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginVertical="20dp"
                 android:background="@color/colorAccent"
-                android:text="SET DATE"
+                android:text="ADD NOTE"
                 android:textColor="@color/colorPrimary"
                 android:textSize="16sp" />
 
-        </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_marginVertical="10dp"
+                android:orientation="horizontal">
+
+                <CheckBox
+                    android:id="@+id/checkBox"
+                    android:layout_width="150dp"
+                    android:layout_height="50dp"
+                    android:text="@string/visited" />
+
+                <Button
+                    android:id="@+id/setDate"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:background="@color/colorAccent"
+                    android:text="SET DATE"
+                    android:textColor="@color/colorPrimary"
+                    android:textSize="16sp" />
+
+            </LinearLayout>
 
             <TextView
                 android:id="@+id/dateText"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="20dp"
+                android:layout_marginBottom="5dp"
+                android:gravity="center"
                 android:text=""
-                android:textSize="28dp"
                 android:textColor="@color/colorAccent"
-                android:gravity="center"/>
-
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/note_lists"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent" />
-
-            <EditText
-                android:id="@+id/noteTitle"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
-                android:hint="Note Title"
-                android:inputType="text"
-                android:textColorHint="@color/colorAccent" />
-
-            <EditText
-                android:id="@+id/noteContent"
-                android:layout_width="match_parent"
-                android:layout_height="100dp"
-                android:gravity="start"
-                android:hint="Note Content"
-                android:inputType="textMultiLine"
-                android:textColorHint="@color/colorAccent" />
-
-            <Button
-                android:id="@+id/addNote"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginVertical="20dp"
-                android:background="@color/colorAccent"
-                android:text="Add Note"
-                android:textColor="@color/colorPrimary"
-                android:textSize="16sp" />
-
-            <!--        <androidx.viewpager.widget.ViewPager-->
-            <!--            android:id="@+id/placemarkImage"-->
-            <!--            android:layout_width="370dp"-->
-            <!--            android:layout_height="300dp"-->
-            <!--            android:padding="8dp" />-->
+                android:textSize="28dp" />
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/image_lists"

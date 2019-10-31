@@ -66,12 +66,25 @@ class PlacemarkJSONStore : UserStore, AnkoLogger {
     }
 
     override fun updateFort(user: UserModel, placemark: PlacemarkModel) {
-        val fort: PlacemarkModel? = user.placemarks.find { x -> x.id == placemark.id }
+//        val fort = findOneFort(user, placemark.id)
+//
+//        if (fort != null) {
+//            user.placemarks[fort.id ] = placemark
+//        }
+//        serialize()
+
+        var fort: PlacemarkModel? = user.placemarks.find { p -> p.id == placemark.id }
 
         if (fort != null) {
-            user.placemarks[fort.id] = placemark
+            // If the hillfort it found. update and save
+            fort.title = placemark.title
+            fort.description = placemark.description
+            fort.location.lat = placemark.location.lat.toString().toDouble()
+            fort.location.lng = placemark.location.lng.toString().toDouble()
+            fort.check_box = placemark.check_box
+            fort.date = placemark.date
+            serialize()
         }
-        serialize()
     }
 
     override fun deleteFort(user: UserModel, placemark: PlacemarkModel) {
@@ -81,6 +94,9 @@ class PlacemarkJSONStore : UserStore, AnkoLogger {
         serialize()
     }
 
+    override fun findOneFort(user: UserModel, id: Int): PlacemarkModel? {
+        return user.placemarks.find { p -> p.id == id }
+    }
 
     // ------------- Override Function for Users ------------- //
     override fun findAllUsers(): ArrayList<UserModel> {
@@ -112,21 +128,5 @@ class PlacemarkJSONStore : UserStore, AnkoLogger {
 
     override fun findUserByEmail(email: String): UserModel? {
         return users.find { x -> x.email == email }
-    }
-
-    // ------------- Override Functions for Note ------------- //
-    override fun createNote(user: UserModel, placemark: PlacemarkModel, note: Note) {
-        note.id = generateRandomId().toInt()
-        user.placemarks[placemark.id - 1].note.add(note)
-        serialize()
-    }
-
-    override fun deleteNote(user: UserModel, placemark: PlacemarkModel, note: Note) {
-        val p : PlacemarkModel? = user.placemarks.find { x -> x.id == placemark.id }
-        val foundNote : Note? = p!!.note.find { x -> x.id == note.id}
-        val index = user.placemarks[placemark.id - 1].note.indexOf(foundNote)
-
-        user.placemarks[placemark.id -1].note.removeAt(index)
-        serialize()
     }
 }

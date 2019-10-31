@@ -38,7 +38,7 @@ class LoginActivity : AppCompatActivity() {
                         val user: UserModel? = app.users.findUserByEmail(email)
 
                         if (user != null && user.password == password) {
-                            toast("LOGGING IN ......")
+                            toast("HELLO ${user.name} :)")
 
                             // We set the currentUser to be the currentUser who logged in
                             app.currentUser = user

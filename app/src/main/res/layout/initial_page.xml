@@ -24,7 +24,7 @@
     <Button
         android:id="@+id/registerPage"
         android:layout_width="match_parent"
-        android:layout_height="368dp"
+        android:layout_height="360dp"
         android:background="@color/colorAccent"
         android:text="@string/register"
         android:textSize="70dp"

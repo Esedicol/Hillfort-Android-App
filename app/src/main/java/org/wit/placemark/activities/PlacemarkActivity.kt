@@ -8,6 +8,12 @@ import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
+import com.google.android.gms.maps.CameraUpdateFactory
+import com.google.android.gms.maps.GoogleMap
+import com.google.android.gms.maps.SupportMapFragment
+import com.google.android.gms.maps.model.LatLng
+import com.google.android.gms.maps.model.MarkerOptions
+import com.google.android.gms.maps.MapsInitializer
 import kotlinx.android.synthetic.main.main_layout.*
 import kotlinx.android.synthetic.main.main_layout.description
 import kotlinx.android.synthetic.main.main_layout.placemarkTitle
@@ -15,23 +21,29 @@ import org.jetbrains.anko.AnkoLogger
 import org.jetbrains.anko.intentFor
 import org.jetbrains.anko.toast
 import org.wit.placemark.R
+import org.wit.placemark.helpers.readImage
+import org.wit.placemark.helpers.readImageFromPath
 import org.wit.placemark.helpers.showImagePicker
 import org.wit.placemark.main.MainApp
 import org.wit.placemark.models.Location
 import org.wit.placemark.models.PlacemarkModel
-import org.wit.placemark.models.Note
 import java.lang.Exception
 import java.text.SimpleDateFormat
 import java.util.*
+import org.wit.placemark.adapters.NotesAdapter
+import org.wit.placemark.adapters.NoteListener
+import java.text.DecimalFormat
 
-class PlacemarkActivity : AppCompatActivity(), AnkoLogger {
+
+class PlacemarkActivity : AppCompatActivity(), AnkoLogger, NoteListener {
 
     lateinit var app: MainApp
     var placemark = PlacemarkModel()
     val IMAGE_REQUEST = 1
     val LOCATION_REQUEST = 2
-    val NOTE_REQUEST = 3
-    var location = Location()
+
+    var location = Location(52.245696, -7.139102, 15f)
+    private lateinit var google_Map: GoogleMap
     var date = String()
     var edit = false
     var dateFormat = SimpleDateFormat("dd MMM, YYYY", Locale.UK)
@@ -55,12 +67,29 @@ class PlacemarkActivity : AppCompatActivity(), AnkoLogger {
 
 
         // ------------- Select Location Button  ------------- //
-        placemarkLocation.setOnClickListener {
-            startActivityForResult(
-                intentFor<MapActivity>().putExtra("location", location),
-                LOCATION_REQUEST
-            )
+        with(map) {
+            onCreate(null)
+            getMapAsync {
+                MapsInitializer.initialize(applicationContext)
+            }
         }
+
+        placemarkLocation.setOnClickListener {
+            if (placemark.location.lat == 0.0 && placemark.location.lng == 0.0) {
+                startActivityForResult(
+                    intentFor<MapsActivity>().putExtra("location", location),
+                    LOCATION_REQUEST
+                )
+            } else {
+                startActivityForResult(
+                    intentFor<MapsActivity>().putExtra(
+                        "location",
+                        placemark.location
+                    ), LOCATION_REQUEST
+                )
+            }
+        }
+
 
         // ------------- Check Box  ------------- //
         setDate.visibility = View.INVISIBLE
@@ -98,21 +127,14 @@ class PlacemarkActivity : AppCompatActivity(), AnkoLogger {
             datePicker.show()
         }
 
-        // ------------- Add Note Button ------------- //
-        addNote.setOnClickListener {
-            val noteTitle = noteTitle.text.toString()
-            val noteContent = noteContent.text.toString()
 
-            if(noteTitle.isNotEmpty() && noteContent.isNotEmpty()) {
-                val newNote = Note()
-
-                newNote.id = generateRandomId().toInt()
-                newNote.title = noteTitle
-                newNote.content = noteContent
-
-                app.users.createNote(app.currentUser, placemark, newNote)
+        // ------------- Notes  ------------- //
+        add_note.setOnClickListener {
+            if (noteContent.text.toString().isNotEmpty()) {
+                placemark.note += noteContent.text.toString()
+                note_view.adapter = NotesAdapter(placemark.note, this)
             } else {
-
+                toast("NOTE EMPTY")
             }
         }
 
@@ -125,14 +147,25 @@ class PlacemarkActivity : AppCompatActivity(), AnkoLogger {
 
             placemarkTitle.setText(placemark.title)
             description.setText(placemark.description)
-            location = placemark.location
             checkBox.isChecked = placemark.check_box
             dateText.text = placemark.date
 
             if (placemark.image_list.size == 0) {
                 placemarkImage.setImageResource(R.drawable.default_image)
+            } else {
+                placemarkImage.setImageBitmap(readImageFromPath(this, placemark.image))
+            }
+
+            location = placemark.location
+            lat.setText("LAT: ${DecimalFormat("#.##").format(location.lat)}")
+            lng.setText("LNG: ${DecimalFormat("#.##").format(location.lng)}")
+
+            val latLng = LatLng(placemark.location.lat, placemark.location.lng)
+            map.getMapAsync {
+                setMapLocation(it, latLng)
             }
         }
+
     }
 
 
@@ -150,22 +183,25 @@ class PlacemarkActivity : AppCompatActivity(), AnkoLogger {
                 )
             )
             R.id.btnAdd -> {
-                toast("ADD")
-
                 placemark.title = placemarkTitle.text.toString()
                 placemark.description = description.text.toString()
                 placemark.check_box = checkBox.isChecked
                 placemark.date = date
+                placemark.location = location
 
-                if (edit) {
-                    toast("UPDATING ....")
-                    app.users.updateFort(app.currentUser, placemark)
+                if (placemark.title.isEmpty() || placemark.description.isEmpty()) {
+                    toast("Add Failed -> Please enter Fort details next time")
                 } else {
-                    try {
-                        app.users.createFort(app.currentUser, placemark)
-                        toast("NEW HILLFORT ADDED")
-                    } catch (e: Exception) {
-                        toast("FAILED TO ADD FORT")
+                    if (edit) {
+                        app.users.updateFort(app.currentUser, placemark)
+                        toast("UPDATING ....")
+                    } else {
+                        try {
+                            app.users.createFort(app.currentUser, placemark)
+                            toast("NEW HILLFORT ADDED")
+                        } catch (e: Exception) {
+                            toast("FAILED TO ADD FORT")
+                        }
                     }
                 }
                 setResult(Activity.RESULT_OK)
@@ -176,38 +212,66 @@ class PlacemarkActivity : AppCompatActivity(), AnkoLogger {
         }
         return super.onOptionsItemSelected(item!!)
     }
-//
-//    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-//        super.onActivityResult(requestCode, resultCode, data)
-//        when (requestCode) {
-//            IMAGE_REQUEST -> {
-//                if (data != null) {
-//                    placemark.image_list += data.data.toString()
-//                    placemarkImage.adapter = ImageAdapter(placemark.image_list, this)
-//                }
-//            }
-//            LOCATION_REQUEST -> {
-//                if (data != null) {
-//                    location = data.extras?.getParcelable<Location>("location")!!
-//                    lat.text = "%.6f".format(location.lat.toString())
-//                    lng.text = "%.6f".format(location.lng.toString())
-//                }
-//            }
-//        }
-//    }
 
-    fun generateRandomId(): Long {
-        return Random().nextLong()
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        when (requestCode) {
+            IMAGE_REQUEST -> {
+                if (data != null) {
+                    placemark.image = data.getData().toString()
+                    placemarkImage.setImageBitmap(readImage(this, resultCode, data))
+                }
+            }
+            LOCATION_REQUEST -> {
+                if (data != null) {
+                    location = data.extras?.getParcelable("location")!!
+                    val lt = location.lat
+                    val lg = location.lng
+
+                    lat.setText("LAT: ${DecimalFormat("#.##").format(lt)}")
+                    lng.setText("LNG: ${DecimalFormat("#.##").format(lg)}")
+                }
+            }
+        }
     }
 
-    private fun loadNotes() {
-        val note = app.currentUser.placemarks[placemark.id].note
-        showNotes(note)
+    override fun del(index: Int) {
+        placemark.note = placemark.note.filterIndexed { i, s -> i != index }
+        note_view.adapter = NotesAdapter(placemark.note, this)
     }
 
-    private fun showNotes(notes: ArrayList<Note>) {
-        recyclerNotes.adapter = NotesAdapter(notes, this)
-        recyclerNotes.adapter?.notifyDataSetChanged()
+    // Map methods
+    public override fun onResume() {
+        map.onResume()
+        super.onResume()
+    }
+
+    public override fun onPause() {
+        super.onPause()
+        map.onPause()
+    }
+
+    public override fun onDestroy() {
+        super.onDestroy()
+        map.onDestroy()
+    }
+
+    override fun onLowMemory() {
+        super.onLowMemory()
+        map.onLowMemory()
+    }
+
+    // Code from: https://stackoverflow.com/questions/16536414/how-to-use-mapview-in-android-using-google-map-v2  //
+    private fun setMapLocation(map: GoogleMap, location: LatLng) {
+        map.moveCamera(CameraUpdateFactory.newLatLngZoom(location, 5f))
+        with(map) {
+            addMarker(
+                MarkerOptions().position(
+                    location
+                )
+            )
+            mapType = GoogleMap.MAP_TYPE_NORMAL
+        }
     }
 }
 

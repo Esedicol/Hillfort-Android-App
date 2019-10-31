@@ -10,5 +10,6 @@ data class UserModel(
     var name: String = "",
     var email: String = "",
     var password: String = "",
-    var placemarks: ArrayList<PlacemarkModel> = ArrayList() ) : Parcelable
+    var placemarks: ArrayList<PlacemarkModel> = ArrayList()
+) : Parcelable
 

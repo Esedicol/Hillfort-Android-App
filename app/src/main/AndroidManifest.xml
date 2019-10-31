@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="org.wit.placemark">
+
     <!--
          The ACCESS_COARSE/FINE_LOCATION permissions are not required to use
          Google Maps Android API v2, but you must specify either coarse or fine
@@ -16,12 +17,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".splash.SplashScreen">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
+
         <!--
              The API key for Google Maps-based APIs is defined as a string resource.
              (See the file "res/values/google_maps_api.xml").
@@ -30,14 +26,25 @@
              sign the APK for publishing.
              You can define the keys for the debug and release targets in src/debug/ and src/release/.
         -->
-        <meta-data android:name="com.google.android.geo.API_KEY" android:value="@string/google_maps_key" />
+        <meta-data
+            android:name="com.google.android.geo.API_KEY"
+            android:value="@string/google_maps_key" />
 
-        <activity android:name=".activities.MapActivity" android:label="@string/title_activity_map"></activity>
-        <activity android:name=".activities.PlacemarkActivity"></activity>
-        <activity android:name=".activities.PlacemarkListActivity"></activity>
-        <activity android:name=".Auth.InitialActivity"></activity>
-        <activity android:name=".Auth.LoginActivity"></activity>
-        <activity android:name=".Auth.RegisterActivity"></activity>
+        <activity
+            android:name=".activities.MapsActivity"
+            android:label="@string/title_activity_maps"></activity>
+        <activity android:name=".splash.SplashScreen">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity android:name=".activities.PlacemarkActivity" />
+        <activity android:name=".activities.PlacemarkListActivity" />
+        <activity android:name=".Auth.InitialActivity" />
+        <activity android:name=".Auth.LoginActivity" />
+        <activity android:name=".Auth.RegisterActivity" />
     </application>
 
 </manifest>

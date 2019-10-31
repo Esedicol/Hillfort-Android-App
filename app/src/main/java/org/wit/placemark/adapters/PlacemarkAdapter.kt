@@ -5,11 +5,10 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import kotlinx.android.synthetic.main.card_placemark.view.*
-import kotlinx.android.synthetic.main.main_layout.view.*
 import org.wit.placemark.R
 import org.wit.placemark.helpers.readImageFromPath
 import org.wit.placemark.models.PlacemarkModel
-import org.wit.placemark.models.UserModel
+import java.text.DecimalFormat
 
 interface PlacemarkListener {
     fun onPlacemarkClick(placemark: PlacemarkModel)
@@ -44,16 +43,15 @@ class PlacemarkAdapter constructor(
             itemView.cardTitle.text = placemark.title
             itemView.cardDescription.text = placemark.description
             itemView.cardCheck.text = "Visited: ${placemark.check_box}"
-            itemView.cardLocation.text = "Lat: ${placemark.location.lat} - Lng: ${placemark.location.lng}"
+
+            val lt = "LAT: ${DecimalFormat("#.##").format(placemark.location.lat)}"
+            val lg = "LAT: ${DecimalFormat("#.##").format(placemark.location.lng)}"
+            itemView.cardLocation.text = "${lt} | ${lg}"
 
             itemView.setOnClickListener { listener.onPlacemarkClick(placemark) }
             itemView.delete_placemark.setOnClickListener { listener.del(placemark) }
 
-            if (placemark.image_list.size == 0) {
-                itemView.imageIcon.setImageResource(R.drawable.default_image)
-            } else {
-                itemView.imageIcon.setImageBitmap(readImageFromPath(itemView.context, placemark.image_list[0]))
-            }
+            itemView.imageIcon.setImageBitmap(readImageFromPath(itemView.context, placemark.image))
         }
     }
 }
