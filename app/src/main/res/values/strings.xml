@@ -38,5 +38,12 @@
     <string name="register">Register</string>
     <string name="logout">Logout</string>
     <string name="title_activity_maps">Map</string>
+    <string name="title_activity_login"> Signup/Login to Placemark</string>
+
+
+    // Bottom Navigation Bar //
+    <string name="nav_add">Add</string>
+    <string name="nav_logout">Logout</string>
+    <string name="nav_settings">Settings</string>
 
 </resources>
