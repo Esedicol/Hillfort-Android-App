@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "1002922185974",
+    "firebase_url": "https://hillfort-4f8ca.firebaseio.com",
+    "project_id": "hillfort-4f8ca",
+    "storage_bucket": "hillfort-4f8ca.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1002922185974:android:ba4eb4ec1f04b3996008d7",
+        "android_client_info": {
+          "package_name": "org.wit.placemark"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1002922185974-tfn101cbnoke17e7b8qhoqap5k7brn8b.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "org.wit.placemark",
+            "certificate_hash": "40a142d0e0a64a284b61e21224cd6c967a4e81fe"
+          }
+        },
+        {
+          "client_id": "1002922185974-8chvlr0qpk90ehs9n9fkktibl9p8vmg2.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD7gDvjr_0GUsiFiohehsLPxkeniOMlBSA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1002922185974-8chvlr0qpk90ehs9n9fkktibl9p8vmg2.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

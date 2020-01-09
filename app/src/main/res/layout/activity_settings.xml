@@ -1,0 +1,264 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+xmlns:app="http://schemas.android.com/apk/res-auto"
+xmlns:tools="http://schemas.android.com/tools"
+android:layout_width="match_parent"
+android:layout_height="match_parent"
+android:layout_gravity="center"
+android:gravity="center"
+android:orientation="vertical"
+android:padding="10dp">
+
+<ScrollView
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@android:color/white"
+    android:fillViewport="true"
+    android:scaleType="fitStart"
+    app:layout_constraintStart_toStartOf="parent"
+    tools:context=".Auth.UserSettings"
+    tools:layout_editor_absoluteY="10dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="80dp"
+        android:gravity="center"
+        android:orientation="vertical">
+
+            <ImageView
+                android:id="@+id/imageView"
+                android:layout_width="200dp"
+                android:layout_height="200dp"
+
+                app:srcCompat="@drawable/user" />
+
+            <EditText
+                android:id="@+id/new_email"
+                android:layout_width="300dp"
+                android:layout_height="wrap_content"
+                android:hint="@string/loginEmailField"
+                android:inputType="textEmailAddress"
+                android:textColorHint="@color/colorPrimary"/>
+
+            <EditText
+                android:id="@+id/old_pass"
+                android:layout_width="300dp"
+                android:layout_height="wrap_content"
+                android:hint="@string/oldPass"
+                android:inputType="textPassword"
+                android:textColorHint="@color/colorPrimary"/>
+
+            <EditText
+                android:id="@+id/new_pass"
+                android:layout_width="300dp"
+                android:layout_height="wrap_content"
+                android:hint="@string/newPass"
+                android:inputType="textPassword"
+                android:textColorHint="@color/colorPrimary"/>
+
+            <LinearLayout
+                android:id="@+id/linearLayout4"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="50dp"
+                android:gravity="center"
+                android:orientation="horizontal">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="300dp"
+                    android:layout_height="wrap_content"
+                    android:gravity="center">
+
+                    <Button
+                        android:id="@+id/back"
+                        android:layout_width="150dp"
+                        android:layout_height="40dp"
+                        android:layout_marginStart="10dp"
+                        android:background="@color/colorPrimary"
+                        android:text="back"
+
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toEndOf="@+id/update"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <Button
+                        android:id="@+id/update"
+                        android:layout_width="150dp"
+                        android:layout_height="40dp"
+                        android:background="@color/colorPrimary"
+                        android:layout_marginEnd="10dp"
+                        android:text="UPDATE"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toStartOf="@+id/back"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+            </LinearLayout>
+
+            <ImageView
+                android:id="@+id/imageView3"
+                android:layout_width="match_parent"
+                android:layout_height="150dp"
+
+                app:srcCompat="@drawable/stats" />
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TableLayout
+                    android:id="@+id/tableLayout"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentStart="true"
+                    android:layout_alignParentTop="true"
+                    android:layout_alignParentEnd="true"
+                    android:gravity="center"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent">
+
+                    <TableRow
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_marginVertical="5dp">
+
+                        <TextView
+                            android:id="@+id/favourite"
+                            android:layout_width="220dp"
+                            android:layout_height="wrap_content"
+                            android:text="Total Favourites: "
+                            android:textSize="20dp"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:id="@+id/s_fav"
+                            android:layout_width="50dp"
+                            android:layout_height="wrap_content"
+                            android:text="... "
+                            android:textSize="25dp"
+                            tools:text="@string/stats" />
+                    </TableRow>
+
+                    <TableRow
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_marginVertical="5dp">
+
+                        <TextView
+                            android:id="@+id/s_ratings"
+                            android:layout_width="220dp"
+                            android:layout_height="wrap_content"
+                            android:text="Average Ratings: "
+                            android:textSize="20dp"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:id="@+id/s_avg"
+                            android:layout_width="50dp"
+                            android:layout_height="wrap_content"
+                            android:text="... "
+                            android:textSize="25dp"
+                            tools:text="@string/stats" />
+                    </TableRow>
+
+                    <TableRow
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_marginVertical="5dp">
+
+                        <TextView
+                            android:id="@+id/f"
+                            android:layout_width="220dp"
+                            android:layout_height="wrap_content"
+                            android:text="Total Hillforts: "
+                            android:textSize="20dp"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:id="@+id/s_total"
+                            android:layout_width="50dp"
+                            android:layout_height="wrap_content"
+                            android:text="... "
+                            android:textSize="25dp"
+                            tools:text="@string/stats" />
+                    </TableRow>
+
+                    <TableRow
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_marginVertical="5dp">
+
+                        <TextView
+                            android:id="@+id/v"
+                            android:layout_width="220dp"
+                            android:layout_height="wrap_content"
+                            android:text="Visited Forts: "
+                            android:textSize="20dp"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:id="@+id/s_visited"
+                            android:layout_width="50dp"
+                            android:layout_height="wrap_content"
+                            android:text="...  "
+                            android:textSize="25dp"
+                            tools:text="@string/stats" />
+                    </TableRow>
+
+                    <TableRow
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_marginVertical="5dp">
+
+                        <TextView
+                            android:id="@+id/i"
+                            android:layout_width="220dp"
+                            android:layout_height="wrap_content"
+                            android:text="Total Images: "
+                            android:textSize="20dp"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:id="@+id/s_img"
+                            android:layout_width="50dp"
+                            android:layout_height="wrap_content"
+                            android:text="... "
+                            android:textSize="25dp"
+                            tools:text="@string/stats" />
+
+                    </TableRow>
+
+                    <TableRow
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_marginVertical="5dp">
+
+                        <TextView
+                            android:id="@+id/n"
+                            android:layout_width="220dp"
+                            android:layout_height="wrap_content"
+                            android:text="Total Notes: "
+                            android:textSize="20dp"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:id="@+id/s_notes"
+                            android:layout_width="50dp"
+                            android:layout_height="wrap_content"
+                            android:text="@string/stats"
+                            android:textSize="26dp" />
+                    </TableRow>
+                </TableLayout>
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </LinearLayout>
+    </ScrollView>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,42 +1,72 @@
 <resources>
-    <string name="app_name">Hillfort</string>
-
+    <string name="app_name">Placemark</string>
+    <string name="accountUsernameLabel">Username: </string>
+    <string name="accountEmailLabel">Email: </string>
+    <string name="accountPasswordLabel">Password: </string>
+    <string name="accountDeleteButton">Delete Account</string>
+    <string name="accountDeleteHillfortsButton">Delete Hillforts</string>
+    <string name="accountEditButton">Edit Account</string>
+    <string name="accountPasswordButton">Change Password</string>
+    <string name="accountEmailButton">Change Email</string>
+    <string name="rate_score">Rating: </string>
+    <string name="save">Save</string>
+    <string name="hillfortEditLocationButton">Edit Location</string>
+    <string name="hillfortAddNoteButton">Add Note</string>
+    <string name="hillfortEditImageButton">Select Images</string>
+    <string name="hillfortChooseCoverButton">Choose As Cover</string>
+    <string name="hillfortShowRouteButton">Show Route</string>
+    <string name="hillfortFabShare">Share</string>
+    <string name="hillfortFabDelete">Delete</string>
+    <string name="hillfortFabFavourite">Favourite</string>
+    <string name="loginEmailField">Email…</string>
+    <string name="loginPasswordField">Password…</string>
+    <string name="loginDividerLabel">or…</string>
+    <string name="loginButton">LOG IN</string>
+    <string name="loginSignUpButton">SIGN UP</string>
+    <string name="statsHeader">User Statistics</string>
+    <string name="statsAverageRatingField">Average Hillfort Rating: </string>
+    <string name="statsTotalHillfortsField">Number Of Hillforts: </string>
+    <string name="statsTotalImagesField">Number Of Images: </string>
+    <string name="statsTotalVisitsField">Number Of Visits: </string>
+    <string name="statsTotalNotesField">Number Of Notes: </string>
+    <string name="statsTopUserField">Number Of Favourites: </string>
+    <string name="accountDialogUsernameField">New Username…</string>
+    <string name="accountDialogEmailField">New Email…</string>
+    <string name="accountDialogPasswordField">New Password…</string>
+    <string name="accountDialogUpdateButton">Update</string>
+    <string name="accountDialogCancelButton">Cancel</string>
+    <string name="aboutGitHubURL">https://github.com/Foxyf76/Hillfort-App/</string>
+    <string name="filterMenuSortFavourite">Sort by Favourites</string>
+    <string name="filterMenuSortRating">Sort by Rating</string>
+    <string name="filterMenuSortVisit">Sort by Visits</string>
+    <string name="filterMenuResetFilter">Reset Filters</string>
+    <string name="signUpUsernameField">Enter a Username…</string>
+    <string name="signUpEmailField">Enter an Email…</string>
+    <string name="signUpPasswordField">Enter a Password…</string>
+    <string name="signUpPassword2Field">Confirm Password…</string>
+    <string name="signUpButton">Sign Up</string>
+    <string name="back">Back</string>
+    <string name="delete">Delete</string>
+    <string name="f_lists">List</string>
+    <string name="f_add">Hilforts</string>
+    <string name="f_maps">Maps</string>
+    <string name="f_settings">Settings</string>
+    <string name="f_logout">Logout</string>
+    <string name="search_hillforts">Search</string>
+    <string name="add_hillforts">Add</string>
+    <string name="save_location">Save Location</string>
     <string name="hint_placemarkTitle">Hillfort Name</string>
     <string name="hint_placemarkDescription">Description </string>
     <string name="enter_placemark_title"> Please enter a Placemark Title </string>
-
-    // tool bar //
-    <string name="button_save">Save</string>
-    <string name="menu_addPlacemark">Add</string>
-    <string name="menu_cancelPlacemark">Cancel</string>
-    <string name="stats">Stats</string>
-    <string name="settings">Settings</string>
-
-    <string name="button_addImage"> Add Image </string>
-    <string name="button_location">Set Location</string>
-
-    // Card Delete Button//
-    <string name="button_delete">Delete</string>
-
-    <string name="title_activity_map">Map</string>
-    <string name="google_maps_key">AIzaSyCN0dtjmqaSf0M89CuQdqk57XjGzN5gcP0</string>
-
-    <string name="select_placemark_image">Select placemark image</string>
-    <string name="change_placemark_image">Change placemark image</string>
-
-    <string name="visited">Hillfort Visited</string>
-
-    // Lat and Lng //
     <string name="hint_lat">Lat:    00.000 </string>
     <string name="hint_lng">Lng:    00.000 </string>
-
-    // Authentication //
-    <string name="name">Name</string>
-    <string name="email">Email</string>
-    <string name="pass">Password</string>
-    <string name="login">Login</string>
-    <string name="register">Register</string>
-    <string name="logout">Logout</string>
-    <string name="title_activity_maps">Map</string>
-
+    <string name="isVisited">Is Visited</string>
+    <string name="dateVisited">Date Visited</string>
+    <string name="add_img">Add Image</string>
+    <string name="remove_img">Remove Image</string>
+    <string name="fav_hillfort">Favourite</string>
+    <string name="oldPass">Old Password ...</string>
+    <string name="newPass">New Password ...</string>
+    <string name="stats">...</string>
 </resources>
+

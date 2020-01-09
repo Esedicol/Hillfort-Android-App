@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#FFFFFF</color>
+    <color name="colorSecondary">#FFFFFF</color>
+    <color name="fontHint">#E91E63</color>
+    <color name="colorPrimary">#E91E63</color>
     <color name="colorPrimaryDark">#00BCD4</color>
-    <color name="colorAccent">#E91E63</color>
+    <color name="orange">#FF9800</color>
     <color name="error">#FF0000</color>
     <color name="black">#000000</color>
-    <color name="purple">#D0CFD8</color>
-</resources>
 
+</resources>

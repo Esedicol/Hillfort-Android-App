@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="140dp"
+    android:layout_marginBottom="8dp"
+
+    android:elevation="24dp">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center">
+
+        <ImageView
+            android:id="@+id/hillfortRecycleItemImageIcon"
+            android:layout_width="120dp"
+            android:layout_height="120dp"
+            android:layout_alignParentStart="false"
+            android:layout_marginStart="5dp"
+            tools:srcCompat="@tools:sample/avatars" />
+
+        <TextView
+            android:id="@+id/hillfortRecycleItemName"
+            android:layout_width="200dp"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="5dp"
+            android:layout_toEndOf="@+id/hillfortRecycleItemImageIcon"
+            android:gravity="center_vertical"
+            android:textSize="30sp"
+            tools:textColor="@color/colorPrimary" />
+
+        <TextView
+            android:id="@+id/hillfortRecycleItemLocation"
+            android:layout_width="200dp"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/hillfortRecycleItemName"
+            android:layout_marginStart="10dp"
+            android:layout_toEndOf="@+id/hillfortRecycleItemImageIcon"
+            android:textSize="20sp" />
+
+        <TextView
+            android:id="@+id/hillfortRecycleItemVisited"
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/hillfortRecycleItemLocation"
+            android:layout_marginStart="10dp"
+            android:layout_toEndOf="@+id/hillfortRecycleItemImageIcon"
+            android:fontFamily="sans-serif-thin"
+            android:textSize="16sp" />
+
+        <RatingBar
+            android:id="@+id/hillfortRecycleItemRating"
+            style="@style/Widget.AppCompat.RatingBar.Small"
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/hillfortRecycleItemVisited"
+            android:layout_marginStart="10dp"
+            android:layout_toEndOf="@+id/hillfortRecycleItemImageIcon"
+            android:numStars="5"
+            android:progressTint="#FF9800" />
+
+        <ImageView
+            android:id="@+id/hillfortRecycleItemFavouriteIcon"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_below="@+id/hillfortRecycleItemLocation"
+            android:layout_marginStart="31dp"
+            android:layout_marginTop="5dp"
+            android:layout_toEndOf="@+id/hillfortRecycleItemVisited"
+            android:tint="#ff74d8" />
+    </RelativeLayout>
+</androidx.cardview.widget.CardView>

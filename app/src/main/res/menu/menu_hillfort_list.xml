@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item
+        android:id="@+id/search_hilforts"
+        android:icon="@android:drawable/ic_menu_search"
+        android:title="@string/search_hillforts"
+        app:actionViewClass="androidx.appcompat.widget.SearchView"
+        app:showAsAction="ifRoom|collapseActionView" />
+
+    <item
+        android:id="@+id/add_hillfort"
+        android:icon="@android:drawable/ic_menu_add"
+        android:title="@string/add_hillforts"
+        app:showAsAction="always" />
+
+    <item
+        android:id="@+id/sortByFavourite"
+        android:icon="@drawable/ic_favorite"
+        android:orderInCategory="100"
+        android:title="@string/fav_hillfort"
+        app:showAsAction="always"
+        android:state_pressed="true"/>
+</menu>

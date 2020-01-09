@@ -1,28 +1,49 @@
 package org.wit.placemark.models
 
 import android.os.Parcelable
+import androidx.room.Embedded
+import androidx.room.Entity
+import androidx.room.PrimaryKey
 import kotlinx.android.parcel.Parcelize
 
 @Parcelize
-data class PlacemarkModel(
+@Entity
+data class HillfortModel(
+    @PrimaryKey(autoGenerate = true)
     var id: Int = 0,
-    var title: String = "",
+    var fbId: String = "",
+    var name: String = "",
     var description: String = "",
-    var date: String = "",
-    var location: Location = Location(),
-    var note: List<String> = ArrayList(),
-    var image_list: List<String> = ArrayList(),
-    var check_box: Boolean = false,
-    var image: String = ""
+    var visited: Boolean = false,
+    var dateVisited: String = "",
+    var rating: Int = 0,
+    var isFavourite: Boolean = false,
+    @Embedded var location: Location = Location(),
+    @Embedded var images: ArrayList<ImageModel> = ArrayList(),
+    @Embedded var notes: ArrayList<NoteModel> = ArrayList()
+
 ) : Parcelable
 
 @Parcelize
-data class Location(
-    var lat: Double = 0.0,
-    var lng: Double = 0.0,
-    var zoom: Float = 0f
+data class Location(var lat: Double = 0.0,
+                    var lng: Double = 0.0,
+                    var zoom: Float = 0f) : Parcelable
+
+@Parcelize
+@Entity
+data class NoteModel(
+    @PrimaryKey(autoGenerate = true)
+    var id: Int = 0,
+    var fbId: String = "",
+    var content: String = ""
 ) : Parcelable
 
 
-
-
+@Parcelize
+@Entity
+data class ImageModel(
+    @PrimaryKey(autoGenerate = true)
+    var id: Int = 0,
+    var fbID: String = "",
+    var uri: String = ""
+): Parcelable

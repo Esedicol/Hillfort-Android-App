@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item
+        android:id="@+id/footer_list"
+        app:labelVisibilityMode="unlabeled"
+        android:icon="@drawable/ic_lists"
+        android:title="@string/f_lists" />
+
+    <item
+        android:id="@+id/footer_add"
+        app:labelVisibilityMode="unlabeled"
+        android:enabled="true"
+        android:icon="@drawable/ic_addd"
+        android:title="@string/f_add" />
+
+    <item
+        android:id="@+id/footer_map"
+        app:labelVisibilityMode="unlabeled"
+        android:enabled="true"
+        android:icon="@android:drawable/ic_menu_mapmode"
+        android:title="@string/f_maps" />
+
+    <item
+        android:id="@+id/footer_settings"
+        app:labelVisibilityMode="unlabeled"
+        android:enabled="true"
+        android:icon="@drawable/ic_settings"
+        android:title="@string/f_settings" />
+
+    <item
+        android:id="@+id/footer_logout"
+        app:labelVisibilityMode="unlabeled"
+        android:enabled="true"
+        android:icon="@drawable/ic_logout"
+        android:title="@string/f_logout" />
+</menu>
