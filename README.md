@@ -1,6 +1,9 @@
 # Hillfort Mobile App
 <br />
 
+Youtube Link: https://www.youtube.com/watch?v=uAz4mHdSBok&t=4s
+Video 2: https://drive.google.com/file/d/1WMrRIA3ti2cAbXLq9pKl7gOCKUZl8Q-R/view?usp=sharing
+
 ## Introduction
 
 Develop an application supporting an exploration of Hillforts. The app should contain a list of hillforts they have
